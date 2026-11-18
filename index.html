@@ -1,0 +1,1960 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#F8F5F0">
+  <meta name="description" content="LETTERFORM é uma papelaria digital para escrever, guardar e compartilhar correspondências.">
+  <title>LETTERFORM | Papelaria digital</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preload" as="image" href="https://images.pexels.com/photos/4491568/pexels-photo-4491568.jpeg?auto=compress&cs=tinysrgb&w=1400">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=DM+Sans:wght@400;500;600;700&family=Parisienne&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --ivory: #F8F5F0;
+      --paper: #EEE7DE;
+      --blush: #E7CFCA;
+      --rose: #C99E9C;
+      --mauve: #A98585;
+      --taupe: #9B8980;
+      --ink: #403936;
+      --white: #FFFFFF;
+      --porcelain: color-mix(in srgb, var(--ivory) 75%, var(--white));
+      --rail: color-mix(in srgb, var(--ivory) 63%, var(--paper));
+      --line: color-mix(in srgb, var(--paper) 76%, var(--taupe));
+      --muted: color-mix(in srgb, var(--ink) 57%, var(--taupe));
+      --accent: color-mix(in srgb, var(--mauve) 57%, var(--ink));
+      --rose-wash: color-mix(in srgb, var(--blush) 50%, var(--ivory));
+      --serif: 'Cormorant Garamond', Georgia, serif;
+      --sans: 'DM Sans', Arial, sans-serif;
+      --hand: 'Parisienne', 'Segoe Script', cursive;
+      --sidebar: 240px;
+      --gutter: clamp(28px, 3vw, 48px);
+      --ease: cubic-bezier(.22,.7,.3,1);
+      color-scheme: light;
+    }
+    *, *::before, *::after { box-sizing: border-box; }
+    [hidden] { display: none !important; }
+    html { min-height: 100%; }
+    body { margin: 0; min-width: 320px; background: var(--ivory); color: var(--ink); font: 400 14px/1.5 var(--sans); }
+    a { color: inherit; text-decoration: none; }
+    button, input, select, textarea { font: inherit; color: inherit; }
+    button { cursor: pointer; }
+    button:disabled { cursor: not-allowed; opacity: .62; }
+    button, summary, a { -webkit-tap-highlight-color: transparent; }
+    button:focus-visible, a:focus-visible, summary:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible, [tabindex]:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+    h1, h2, h3, p, figure { margin: 0; }
+    h1, h2, h3 { font-family: var(--serif); font-weight: 600; }
+    img { display: block; max-width: 100%; }
+    svg { display: block; }
+    .icon { width: 19px; height: 19px; flex: 0 0 auto; fill: none; stroke: currentColor; stroke-width: 1.55; stroke-linecap: round; stroke-linejoin: round; }
+    .icon.sm { width: 15px; height: 15px; }
+    .micro { color: var(--accent); font-size: 10px; font-weight: 700; line-height: 1.45; letter-spacing: .17em; text-transform: uppercase; }
+    .muted { color: var(--muted); }
+    .fine { color: var(--muted); font-size: 12px; line-height: 1.55; }
+    .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+    .skip-link { position: fixed; top: 10px; left: 12px; z-index: 30; padding: 10px 15px; background: var(--white); transform: translateY(-160%); }
+    .skip-link:focus { transform: none; }
+    .sidebar {
+      position: fixed; inset: 0 auto 0 0; z-index: 12; width: var(--sidebar); display: flex; flex-direction: column;
+      padding: 34px 19px 24px; overflow: auto; background: var(--rail); border-right: 1px solid var(--line);
+    }
+    .brand { display: inline-flex; align-items: center; gap: 10px; width: fit-content; }
+    .sidebar > .brand { margin: 0 8px 42px; }
+    .brand-icon { width: 37px; height: 37px; display: grid; place-items: center; border-radius: 4px; background: var(--rose-wash); border: 1px solid color-mix(in srgb, var(--rose) 39%, var(--paper)); color: var(--accent); flex: none; }
+    .brand-icon .icon { width: 23px; height: 23px; stroke-width: 1.2; }
+    .brand-name { display: block; font: 700 24px/.95 var(--serif); letter-spacing: .045em; }
+    .brand-sub { display: block; color: var(--muted); margin-top: 6px; font-size: 8px; line-height: 1; letter-spacing: .24em; font-weight: 700; text-transform: uppercase; }
+    .nav-caption { padding: 0 11px; margin-bottom: 9px; }
+    .nav-links { display: grid; gap: 4px; }
+    .nav-link { position: relative; display: flex; align-items: center; gap: 12px; min-height: 42px; padding: 8px 11px; border: 1px solid transparent; border-radius: 5px; color: var(--muted); font-size: 13px; font-weight: 500; transition: background .2s, color .2s; }
+    .nav-link:hover { background: var(--paper); color: var(--ink); }
+    .nav-link[aria-current="page"] { background: var(--rose-wash); color: var(--ink); font-weight: 700; border-color: color-mix(in srgb, var(--blush) 68%, var(--ivory)); }
+    .nav-link[aria-current="page"] .icon { color: var(--accent); }
+    .nav-link[aria-current="page"]::after { content: ''; position: absolute; right: 12px; width: 5px; height: 5px; border-radius: 50%; background: var(--mauve); }
+    .nav-divider { height: 1px; background: var(--line); margin: 13px 8px 9px; }
+    .sidebar-footer { margin-top: auto; padding: 35px 10px 0; }
+    .side-note { display: flex; align-items: center; gap: 10px; padding: 13px 0 0; border-top: 1px solid var(--line); }
+    .side-note .icon { color: var(--accent); width: 17px; height: 17px; }
+    .side-note strong { display: block; font-size: 11px; font-weight: 700; }
+    .side-note small { display: block; color: var(--muted); font-size: 10px; margin-top: 2px; }
+    .sidebar-verse { color: var(--accent); font: italic 500 20px/1.2 var(--serif); margin-bottom: 13px; }
+    .mobile-bar, .mobile-backdrop, .icon-button.mobile-close { display: none; }
+    .workspace { margin-left: var(--sidebar); padding: 29px var(--gutter) 44px; }
+    .viewport { width: 100%; max-width: 1350px; margin-inline: auto; outline: none; }
+    .viewport.page-enter { animation: page-in .33s var(--ease) both; }
+    @keyframes page-in { from { opacity: .68; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+    .button, .icon-button, .text-button { display: inline-flex; align-items: center; justify-content: center; gap: 8px; border-radius: 4px; font-weight: 600; transition: background .18s, border-color .18s, color .18s, transform .18s; }
+    .button { min-height: 41px; padding: 9px 14px; border: 1px solid var(--line); background: var(--porcelain); line-height: 1.25; font-size: 13px; text-align: center; }
+    .button:hover, .icon-button:hover { border-color: var(--mauve); background: var(--rose-wash); }
+    .button:active, .icon-button:active { transform: translateY(1px); }
+    .button.primary { background: var(--accent); border-color: var(--accent); color: var(--white); }
+    .button.primary:hover { background: var(--ink); border-color: var(--ink); }
+    .button.soft { background: var(--rose-wash); }
+    .button.subtle { background: transparent; }
+    .button.danger { color: var(--accent); background: var(--rose-wash); border-color: var(--rose); }
+    .icon-button { width: 36px; height: 36px; padding: 0; border: 1px solid var(--line); background: transparent; color: var(--muted); flex: none; }
+    .icon-button.plain { border-color: transparent; }
+    .icon-button.marked { color: var(--accent); }
+    .icon-button.marked .icon { fill: var(--rose); }
+    .icon-button.tiny { width: 29px; height: 29px; }
+    .icon-button.tiny .icon { width: 15px; height: 15px; }
+    .text-button { border: 0; background: transparent; color: var(--accent); padding: 3px 0; font-size: 12px; width: fit-content; text-align: left; }
+    .text-button:hover { color: var(--ink); text-decoration: underline; text-underline-offset: 4px; }
+    .text-button .icon { transition: transform .2s var(--ease); }
+    .text-button:hover .icon.trailing { transform: translateX(3px); }
+    .actions { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+    .welcome-top { display: flex; justify-content: space-between; align-items: center; gap: 12px; min-height: 36px; margin-bottom: 1px; }
+    .welcome-tag { display: flex; align-items: center; gap: 8px; }
+    .welcome-tag::before { content: ''; width: 16px; height: 1px; background: var(--mauve); }
+    .today-meta { display: flex; align-items: center; gap: 15px; color: var(--muted); font-size: 12px; }
+    .today-meta time { display: inline-flex; gap: 7px; align-items: center; }
+    .today-meta .icon-button { width: 34px; height: 34px; }
+    .welcome h1 { font-size: clamp(38px, 3.6vw, 56px); line-height: .99; letter-spacing: -.032em; overflow-wrap: anywhere; }
+    .welcome > p { margin-top: 8px; font-size: 13px; color: var(--muted); }
+    .hero { position: relative; min-height: 265px; isolation: isolate; overflow: hidden; display: flex; align-items: center; margin: 23px 0 0; border: 1px solid color-mix(in srgb, var(--paper) 68%, var(--taupe)); border-radius: 6px; background: var(--paper); }
+    .hero-photo { position: absolute; z-index: -1; inset: 0 0 0 25%; background: url('https://images.pexels.com/photos/4491568/pexels-photo-4491568.jpeg?auto=compress&cs=tinysrgb&w=1400') center 58% / cover no-repeat; filter: sepia(.17) saturate(.76) contrast(.94); mask-image: linear-gradient(90deg, transparent 0%, rgba(0,0,0,.2) 12%, #000 44%); }
+    .hero-grain { position: absolute; z-index: -1; inset: 0; width: 100%; height: 100%; opacity: .19; pointer-events: none; mix-blend-mode: multiply; }
+    .hero-fallback { position: absolute; z-index: -2; width: 65%; height: 100%; right: 0; top: 0; }
+    .hero-copy { padding: 28px clamp(27px, 3.65vw, 55px) 29px; width: min(61%, 600px); position: relative; }
+    .hero-copy .micro { letter-spacing: .21em; }
+    .hero-title { font-size: clamp(49px, 4.6vw, 74px); line-height: .82; letter-spacing: -.045em; margin: 14px 0 18px; font-weight: 500; }
+    .hero-title em { display: block; color: var(--accent); font-weight: 500; }
+    .hero-copy p:not(.micro) { color: var(--muted); font-size: 13px; margin-bottom: 17px; }
+    .hero .button { min-height: 42px; padding-inline: 15px 18px; }
+    .hero .button.primary { background: var(--rose); border-color: var(--rose); color: var(--ink); }
+    .hero .button.primary:hover { background: color-mix(in srgb, var(--rose) 75%, var(--blush)); border-color: var(--mauve); }
+    .hero .button .icon { width: 17px; height: 17px; }
+    .metrics { display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); margin-top: 23px; padding: 13px 0; border-block: 1px solid var(--line); }
+    .metric { min-width: 0; display: flex; align-items: center; gap: clamp(9px, 1.12vw, 16px); padding: 3px clamp(9px, 1.65vw, 25px); }
+    .metric:first-child { padding-left: 4px; }
+    .metric + .metric { border-left: 1px solid var(--line); }
+    .metric-icon { width: 42px; height: 42px; flex: none; display: grid; place-items: center; border-radius: 5px; background: var(--rose-wash); color: var(--accent); }
+    .metric:nth-child(2) .metric-icon { background: var(--paper); }
+    .metric:nth-child(3) .metric-icon { background: color-mix(in srgb, var(--blush) 65%, var(--ivory)); }
+    .metric:nth-child(4) .metric-icon { background: color-mix(in srgb, var(--paper) 55%, var(--blush)); }
+    .metric-count { display: block; font: 600 36px/.86 var(--serif); font-variant-numeric: lining-nums tabular-nums; }
+    .metric-label { display: block; margin-top: 5px; font-size: 11px; color: var(--muted); line-height: 1.2; }
+    .desk-grid { display: grid; grid-template-columns: minmax(0,1.76fr) minmax(285px,1fr); align-items: start; gap: 27px; margin-top: 25px; }
+    .desk-column { display: grid; min-width: 0; gap: 24px; }
+    .section-head { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; margin-bottom: 10px; }
+    .section-head h2 { font-size: 31px; line-height: 1; letter-spacing: -.025em; }
+    .section-head .text-button { flex-shrink: 0; }
+    .empty {
+      min-height: 240px; display: grid; justify-items: center; align-content: center; text-align: center; gap: 7px;
+      padding: 20px; border: 1px dashed color-mix(in srgb, var(--paper) 61%, var(--taupe)); border-radius: 5px; background: var(--porcelain);
+    }
+    .empty.compact { min-height: 188px; padding: 12px 16px 16px; gap: 4px; }
+    .empty-art { width: 83px; height: 52px; color: var(--mauve); margin-bottom: 0; }
+    .empty h3 { font-size: 24px; line-height: 1.12; }
+    .empty > p { color: var(--muted); font-size: 12px; max-width: 39ch; }
+    .empty .button, .empty .text-button { margin-top: 5px; }
+    .empty .button { min-height: 37px; }
+    .quiet-row { display: flex; align-items: center; gap: 10px; min-height: 48px; padding: 8px 0; border-top: 1px solid var(--line); color: var(--muted); font-size: 12px; }
+    .quiet-row .icon { color: var(--accent); }
+    .list-row { display: flex; align-items: center; gap: 12px; padding: 10px 4px 10px 0; border-top: 1px solid var(--line); min-width: 0; }
+    .list-row:last-child { border-bottom: 1px solid var(--line); }
+    .row-icon { width: 36px; height: 36px; display: grid; place-items: center; background: var(--rose-wash); border-radius: 4px; color: var(--accent); flex: none; }
+    .row-copy { min-width: 0; flex: 1; }
+    .row-copy h3, .row-copy strong { font: 700 22px/1.06 var(--serif); display: block; overflow-wrap: anywhere; }
+    .row-copy p { margin-top: 2px; color: var(--muted); font-size: 11px; overflow-wrap: anywhere; }
+    a.list-row:hover .row-copy h3, a.list-row:hover .row-copy strong { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 3px; }
+    .list-row > .icon:last-child { color: var(--accent); margin-left: auto; }
+    .dash-shortcuts { border-top: 1px solid var(--line); margin-top: 29px; padding-top: 17px; }
+    .dash-shortcuts .section-head h2 { font-size: 27px; }
+    .shortcut-row { display: flex; gap: 12px 25px; flex-wrap: wrap; }
+    .shortcut-row .text-button { gap: 8px; }
+    .mini-calendar { padding: 12px 15px 10px; border: 1px solid var(--line); border-radius: 5px; background: var(--porcelain); }
+    .month-bar { display: flex; justify-content: space-between; align-items: center; gap: 8px; margin-bottom: 5px; }
+    .month-bar h3 { font-size: 23px; line-height: 1; }
+    .month-controls { display: flex; gap: 3px; flex: none; }
+    .month-controls .icon-button { border-color: transparent; }
+    .cal-grid { display: grid; grid-template-columns: repeat(7, minmax(0,1fr)); }
+    .cal-week { color: var(--muted); text-align: center; font-size: 10px; font-weight: 700; padding: 5px 1px; }
+    .cal-day { position: relative; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; min-width: 0; border: 1px solid transparent; background: transparent; text-align: center; border-radius: 4px; padding: 2px 0; }
+    .cal-day:hover { background: var(--paper); }
+    .cal-day.is-today { color: var(--ink); font-weight: 700; }
+    .cal-day.is-outside { color: color-mix(in srgb, var(--muted) 78%, var(--white)); }
+    .mini-calendar .cal-day { margin-inline: auto; width: min(100%, 33px); min-height: 29px; font-size: 11px; }
+    .mini-calendar .cal-day.is-today { background: var(--blush); border-color: var(--rose); }
+    .event-dots { display: inline-flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 4px; }
+    .mini-calendar .event-dots { position: absolute; bottom: 2px; gap: 3px; }
+    .event-dot { display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: var(--taupe); flex: none; }
+    .mini-calendar .event-dot { width: 4px; height: 4px; }
+    .event-dot.received { background: transparent; border: 1.5px solid var(--accent); border-radius: 1px; }
+    .event-dot.opening { background: var(--mauve); border-radius: 0; transform: rotate(45deg); }
+    .cal-note { border-top: 1px solid var(--line); padding-top: 8px; margin-top: 6px; color: var(--muted); font-size: 11px; display: flex; align-items: center; gap: 7px; }
+    .cal-note .icon { color: var(--accent); }
+    .page-heading { display: flex; justify-content: space-between; align-items: flex-end; gap: 18px; padding: 12px 0 21px; margin-bottom: 22px; border-bottom: 1px solid var(--line); }
+    .page-heading h1 { font-size: clamp(40px, 4.45vw, 64px); line-height: .96; letter-spacing: -.035em; margin: 6px 0 6px; }
+    .page-heading p:not(.micro) { color: var(--muted); font-size: 13px; }
+    .page-heading .actions { justify-content: flex-end; }
+    .form-field { display: grid; gap: 5px; min-width: 0; align-content: start; }
+    .form-field > span:first-child, .field-label { font-size: 12px; font-weight: 700; }
+    .input { width: 100%; min-width: 0; min-height: 41px; border: 1px solid var(--line); border-radius: 4px; padding: 8px 11px; background: var(--porcelain); outline-color: var(--mauve); }
+    .input::placeholder, textarea::placeholder { color: var(--muted); opacity: .84; }
+    .input:hover { border-color: var(--mauve); }
+    select.input { padding-right: 22px; }
+    textarea.input { resize: vertical; }
+    .field-row { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 12px; }
+    .form-stack { display: grid; gap: 15px; }
+    .field-check { display: flex; align-items: flex-start; gap: 9px; font-size: 13px; font-weight: 600; }
+    .field-check input { accent-color: var(--accent); width: 16px; height: 16px; margin: 2px 0 0; flex: none; }
+    .notice { padding: 11px 13px; border-left: 2px solid var(--mauve); background: var(--rose-wash); color: var(--ink); font-size: 12px; line-height: 1.55; }
+    .filter-bar { display: grid; grid-template-columns: minmax(160px, 1.6fr) repeat(3, minmax(123px, 1fr)); gap: 10px; margin-bottom: 14px; }
+    .search-field { position: relative; }
+    .search-field .icon { position: absolute; top: 11px; left: 11px; color: var(--muted); pointer-events: none; }
+    .search-field .input { padding-left: 38px; }
+    .result-count { margin-bottom: 10px; }
+    .letter-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 265px), 1fr)); gap: 17px; }
+    .letter-tile { position: relative; display: flex; flex-direction: column; min-width: 0; background: var(--porcelain); border: 1px solid var(--line); border-radius: 5px; transition: border-color .2s; }
+    .letter-tile:hover { border-color: var(--mauve); }
+    .tile-cover { height: 104px; position: relative; display: grid; place-items: center; overflow: hidden; border-radius: 4px 4px 0 0; color: var(--accent); border-bottom: 1px solid var(--line); background-color: var(--paper); }
+    .tile-cover > img { width: 100%; height: 100%; object-fit: cover; }
+    .tile-cover::before { content: ''; position: absolute; inset: 8px; border: 1px solid var(--line); opacity: .7; pointer-events: none; }
+    .tile-cover > .icon { width: 36px; height: 36px; stroke-width: 1; }
+    .tile-content { display: grid; gap: 4px; padding: 12px 14px; min-width: 0; }
+    .tile-content h2 { font-size: 29px; line-height: 1; overflow-wrap: anywhere; }
+    .tile-content a:hover { text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 1px; }
+    .tile-content p { color: var(--muted); overflow-wrap: anywhere; font-size: 12px; }
+    .tile-bottom { margin-top: auto; padding: 8px 10px 8px 14px; border-top: 1px solid var(--line); display: flex; justify-content: space-between; align-items: center; gap: 6px; }
+    .status-label { display: inline-flex; align-items: center; gap: 6px; color: var(--accent); font-size: 11px; font-weight: 700; }
+    .status-label::before { content: ''; width: 5px; height: 5px; background: var(--mauve); border-radius: 50%; flex: none; }
+    .tile-bottom .actions { flex-wrap: nowrap; gap: 4px; }
+    .item-menu { position: relative; }
+    .item-menu summary { list-style: none; cursor: pointer; }
+    .item-menu summary::-webkit-details-marker { display: none; }
+    .menu-list { display: grid; position: absolute; z-index: 5; right: 0; top: calc(100% + 3px); width: max-content; min-width: 150px; padding: 4px; border: 1px solid var(--line); border-radius: 5px; background: var(--porcelain); box-shadow: 0 6px 16px color-mix(in srgb,var(--ink) 9%,transparent); }
+    .menu-list > a, .menu-list > button { display: flex; align-items: center; gap: 7px; background: transparent; border: 0; border-radius: 3px; text-align: left; padding: 7px 8px; font-size: 12px; }
+    .menu-list > :hover { background: var(--rose-wash); }
+    .layout-two { display: grid; grid-template-columns: minmax(0, 1fr) minmax(245px, .43fr); gap: 24px; align-items: start; }
+    .editor-meta { display: grid; gap: 11px; grid-template-columns: repeat(2,minmax(0,1fr)); margin-bottom: 18px; }
+    .editor-meta .full { grid-column: 1 / -1; }
+    .editor-status { min-height: 20px; display: flex; align-items: center; gap: 6px; margin-bottom: 5px; }
+    .editor-status .icon { color: var(--accent); }
+    .editor-sheet, .letter-paper, .tile-cover { --letter-paper: var(--ivory); }
+    [data-paper="rose"] { --letter-paper: var(--rose-wash); }
+    [data-paper="white"] { --letter-paper: var(--white); }
+    [data-paper="natural"] { --letter-paper: var(--paper); }
+    .tile-cover { background-color: var(--letter-paper); }
+    .editor-sheet, .letter-paper { background-color: var(--letter-paper); border: 1px solid var(--line); border-radius: 4px; }
+    [data-paper="natural"].editor-sheet, [data-paper="natural"].letter-paper { background-image: repeating-linear-gradient(17deg, transparent 0 12px, rgba(64,57,54,.018) 13px 14px, transparent 15px 26px); }
+    [data-font="serif"] { --body-font: var(--serif); --type-scale: 1; }
+    [data-font="sans"] { --body-font: var(--sans); --type-scale: .83; }
+    [data-font="hand"] { --body-font: var(--hand); --type-scale: 1.13; }
+    [data-size="small"] { --body-size: 20px; }
+    [data-size="medium"] { --body-size: 25px; }
+    [data-size="large"] { --body-size: 30px; }
+    [data-tone="ink"] { --letter-ink: var(--ink); }
+    [data-tone="gray"] { --letter-ink: var(--muted); }
+    [data-tone="rose"] { --letter-ink: var(--accent); }
+    [data-tone="taupe"] { --letter-ink: color-mix(in srgb, var(--taupe) 41%, var(--ink)); }
+    [data-align="left"] { --body-align: left; }
+    [data-align="center"] { --body-align: center; }
+    [data-align="justify"] { --body-align: justify; }
+    .editor-sheet { padding: 18px clamp(16px, 3vw, 43px) 8px; background-color: var(--letter-paper); }
+    .editor-sheet .field-label { display: block; color: var(--muted); }
+    .editor-sheet textarea { width: 100%; min-height: 290px; min-width: 0; padding: 10px 0 12px; border: 0; resize: vertical; background: transparent; outline-offset: 1px; }
+    .styled-body { color: var(--letter-ink, var(--ink)); font-family: var(--body-font, var(--serif)); font-size: calc(var(--body-size, 25px) * var(--type-scale, 1)); line-height: 1.48; text-align: var(--body-align, left); }
+    .side-panel { padding: 14px 0 0 18px; border-left: 1px solid var(--line); }
+    .side-panel + .side-panel { margin-top: 22px; }
+    .side-panel h2 { font-size: 29px; line-height: 1; margin: 0 0 10px; }
+    .side-panel .input { min-height: 36px; font-size: 12px; }
+    .side-panel .form-stack { gap: 11px; }
+    .choices { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 6px; margin-top: 5px; }
+    .choice { min-width: 0; display: flex; align-items: center; text-align: left; gap: 6px; min-height: 35px; padding: 5px 7px; background: var(--porcelain); border-radius: 4px; border: 1px solid var(--line); font-size: 11px; line-height: 1.2; }
+    .choice[aria-pressed="true"], .choice:hover { border-color: var(--mauve); background: var(--rose-wash); }
+    .paper-swatch { width: 16px; height: 17px; border: 1px solid var(--line); border-radius: 1px; flex: none; background: var(--letter-paper, var(--ivory)); }
+    .editor-photos { display: grid; gap: 7px; margin: 9px 0; }
+    .photo-edit { display: grid; grid-template-columns: 42px minmax(0,1fr) auto; align-items: center; gap: 6px; }
+    .photo-edit img { width: 42px; height: 40px; border-radius: 3px; object-fit: cover; }
+    .photo-edit .input { padding-inline: 6px; }
+    .photos-help { margin: 8px 0; }
+    .reader-toolbar { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; margin: 7px 0 20px; }
+    .reader-footer { width: min(100%, 750px); margin: 10px auto 0; }
+    .letter-paper { width: min(100%, 750px); margin-inline: auto; min-height: 450px; padding: clamp(25px, 6vw, 73px); overflow-wrap: anywhere; background-color: var(--letter-paper); }
+    .letter-paper header { border-bottom: 1px solid var(--line); padding-bottom: 17px; margin-bottom: 20px; }
+    .letter-paper h1, .letter-paper h2 { font-size: clamp(37px, 6vw, 61px); font-weight: 600; line-height: 1.03; letter-spacing: -.02em; margin: 8px 0 12px; }
+    .letter-meta { display: flex; flex-wrap: wrap; gap: 3px 15px; color: var(--muted); font-size: 12px; }
+    .letter-paper .styled-body { white-space: pre-wrap; }
+    .signature { color: var(--letter-ink, var(--ink)); font: 400 30px/1.25 var(--hand); margin-top: 23px; }
+    .letter-photos { display: grid; gap: 18px; margin-top: 24px; }
+    .letter-photos img { max-height: 510px; width: auto; margin-inline: auto; object-fit: contain; }
+    .letter-photos figcaption { margin-top: 4px; color: var(--muted); font-size: 12px; text-align: center; }
+    .sealed-screen { text-align: center; max-width: 650px; margin: 0 auto; padding: 22px 14px 36px; }
+    .sealed-screen h1 { font-size: clamp(39px, 5.6vw, 61px); line-height: 1; margin: 8px 0; overflow-wrap: anywhere; }
+    .sealed-screen > p:not(.micro) { color: var(--muted); overflow-wrap: anywhere; }
+    .sealed-screen .actions { justify-content: center; margin-top: 15px; }
+    .outside-message { font: italic 500 25px/1.2 var(--serif); margin: 12px auto 8px; max-width: 36ch; overflow-wrap: anywhere; }
+    .countdown { margin-top: 9px; color: var(--accent); font-size: 13px; font-weight: 700; font-variant-numeric: tabular-nums; }
+    .envelope-stage { width: min(100%, 370px); aspect-ratio: 1.68; position: relative; isolation: isolate; margin: 37px auto 21px; perspective: 750px; --env-color: var(--paper); --flap-peak: 58%; }
+    .envelope-stage[data-color="rose"] { --env-color: var(--blush); }
+    .envelope-stage[data-color="ivory"] { --env-color: var(--ivory); }
+    .envelope-stage[data-color="mauve"] { --env-color: color-mix(in srgb, var(--mauve) 53%, var(--ivory)); }
+    .envelope-stage[data-model="rose"] { --flap-peak: 69%; }
+    .envelope-stage[data-model="minimal"] { --flap-peak: 35%; }
+    .env-back, .env-flap, .env-pocket { position: absolute; inset: 0; border-radius: 5px; }
+    .env-back { background: color-mix(in srgb,var(--env-color) 90%,var(--taupe)); border: 1px solid var(--line); box-shadow: 0 11px 19px color-mix(in srgb, var(--ink) 11%, transparent); }
+    .env-insert { position: absolute; z-index: 1; inset: 7% 6% 9%; display: grid; place-items: center; background: var(--porcelain); border: 1px solid var(--line); color: var(--accent); transition: transform .57s .3s var(--ease); }
+    .env-insert .icon { width: 32px; height: 32px; stroke-width: 1; }
+    .env-pocket { z-index: 2; background: linear-gradient(153deg, color-mix(in srgb,var(--env-color) 96%,var(--white)) 48%, color-mix(in srgb,var(--env-color) 89%,var(--taupe))); clip-path: polygon(0 1%,50% calc(var(--flap-peak) - 2%),100% 1%,100% 100%,0 100%); border: 1px solid var(--line); }
+    .env-flap { z-index: 3; background: linear-gradient(174deg, var(--env-color) 23%, color-mix(in srgb,var(--env-color) 79%,var(--taupe))); clip-path: polygon(0 0,100% 0,50% var(--flap-peak)); transform-origin: 50% 0; transition: transform .48s var(--ease); }
+    .env-seal { z-index: 4; position: absolute; left: 50%; top: var(--flap-peak); width: 15%; aspect-ratio: 1; display: grid; place-items: center; transform: translate(-50%,-60%) rotate(-9deg); border-radius: 47% 53% 48% 52%; background: var(--rose); border: 3px double var(--accent); color: var(--accent); box-shadow: 0 2px 3px color-mix(in srgb,var(--ink) 20%,transparent); transition: opacity .24s, transform .28s; }
+    .env-seal .icon { width: 53%; height: 53%; stroke-width: 1.1; }
+    .envelope-stage[data-model="rose"] .env-seal { background: var(--mauve); color: var(--ivory); }
+    .envelope-stage[data-model="minimal"] .env-seal { width: 10%; border-radius: 3px; border-width: 1px; transform: translate(-50%,-37%); }
+    .envelope-stage.is-open .env-flap { z-index: 0; transform: rotateX(172deg); }
+    .envelope-stage.is-open .env-seal { opacity: 0; transform: translate(-50%,-45%) scale(.85); }
+    .envelope-stage.is-open .env-insert { transform: translateY(-36%); }
+    .envelope-preview { position: sticky; top: 19px; border-left: 1px solid var(--line); padding: 9px 0 13px 19px; text-align: center; }
+    .envelope-preview h2 { font-size: 30px; }
+    .envelope-preview .envelope-stage { margin-top: 19px; }
+    .envelope-preview .fine { overflow-wrap: anywhere; }
+    .envelope-filter { max-width: 285px; margin-bottom: 14px; }
+    .env-card-art { display: grid; place-items: center; min-height: 165px; padding: 16px 20px; border-radius: 4px 4px 0 0; border-bottom: 1px solid var(--line); background: var(--paper); }
+    .env-card-art .envelope-stage { width: min(100%, 208px); margin: 9px 0 0; transition: transform .22s var(--ease); }
+    .env-card-art:hover .envelope-stage { transform: translateY(-3px); }
+    .env-card-art .env-insert .icon { width: 20px; height: 20px; }
+    .calendar-layout { display: grid; grid-template-columns: minmax(0,1.8fr) minmax(230px,1fr); gap: 23px; align-items: start; }
+    .full-calendar { min-width: 0; }
+    .full-calendar .month-bar { padding-bottom: 8px; }
+    .full-calendar .month-bar h3 { font-size: 30px; }
+    .full-calendar .cal-grid { border-top: 1px solid var(--line); border-left: 1px solid var(--line); background: var(--porcelain); }
+    .full-calendar .cal-grid > * { border: 0; border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); border-radius: 0; }
+    .full-calendar .cal-day { min-height: clamp(43px, 6.5vw, 82px); gap: 5px; font-size: 14px; }
+    .full-calendar .cal-day.is-selected { background: var(--rose-wash); box-shadow: inset 0 0 0 1px var(--mauve); }
+    .full-calendar .cal-day.is-today > span:first-child { background: var(--blush); border-radius: 4px; min-width: 25px; padding: 1px 3px; }
+    .cal-legend { display: flex; flex-wrap: wrap; gap: 7px 16px; margin-top: 11px; }
+    .cal-legend > span { display: inline-flex; align-items: center; gap: 6px; font-size: 11px; color: var(--muted); }
+    .cal-events h2 { line-height: 1.05; font-size: 29px; margin: 7px 0 10px; }
+    .setting-layout { display: grid; grid-template-columns: minmax(0,1fr) minmax(230px,.56fr); gap: 25px; align-items: start; max-width: 940px; }
+    .setting-section { padding: 0 0 18px; border-bottom: 1px solid var(--line); }
+    .setting-section h2 { font-size: 31px; line-height: 1; margin-bottom: 5px; }
+    .setting-section > .fine { margin-bottom: 12px; }
+    .storage-meter { height: 5px; width: 100%; background: var(--paper); margin: 10px 0 8px; border-radius: 2px; overflow: hidden; }
+    .storage-meter span { height: 100%; background: var(--mauve); display: block; }
+    .modal { border: 1px solid var(--line); border-radius: 7px; background: var(--ivory); color: var(--ink); width: min(calc(100% - 34px), 470px); max-height: calc(100dvh - 34px); padding: 20px; overflow: auto; margin: auto; box-shadow: 0 14px 50px color-mix(in srgb,var(--ink) 17%,transparent); }
+    .modal.wide { width: min(calc(100% - 34px), 760px); }
+    .modal[open] { animation: dialog-in .2s var(--ease) both; }
+    .modal::backdrop { background: rgba(64,57,54,.38); }
+    @keyframes dialog-in { from { opacity: 0; transform: translateY(9px) scale(.99); } to { opacity: 1; transform: translateY(0) scale(1); } }
+    .modal-head { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 10px; }
+    .modal-head h2 { font-size: 32px; line-height: 1; }
+    .modal-body p { overflow-wrap: anywhere; }
+    .modal .letter-paper { min-height: 180px; padding: clamp(20px, 4.3vw, 44px); }
+    .modal .letter-paper h2 { font-size: clamp(33px, 5vw, 48px); }
+    .modal-actions { justify-content: flex-end; margin-top: 12px; }
+    .modal.wide .modal-actions { position: sticky; bottom: -20px; padding: 10px 0 8px; background: var(--ivory); }
+    .sealed-screen.compact { padding: 4px 5px 12px; }
+    .import-title { font-size: 36px; line-height: 1.05; margin: 6px 0; overflow-wrap: anywhere; }
+    .choose-list { max-height: 280px; overflow: auto; }
+    .choose-list button { width: 100%; background: transparent; border: 0; border-top: 1px solid var(--line); text-align: left; }
+    .choose-list button:hover { background: var(--rose-wash); }
+    .toast-region { position: fixed; right: 17px; bottom: 17px; z-index: 20; width: min(365px, calc(100% - 34px)); pointer-events: none; }
+    .toast { display: flex; gap: 8px; align-items: flex-start; padding: 12px 15px; background: var(--ink); border-radius: 5px; color: var(--white); box-shadow: 0 5px 17px color-mix(in srgb,var(--ink) 14%,transparent); animation: dialog-in .22s var(--ease) both; font-size: 13px; }
+    .toast .icon { color: var(--blush); }
+    .spinner { width: 14px; height: 14px; display: inline-block; border: 1.5px solid currentColor; border-right-color: transparent; border-radius: 50%; animation: spin .7s linear infinite; flex: none; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    @media (max-width: 1120px) {
+      :root { --sidebar: 211px; --gutter: 28px; }
+      .sidebar { padding-inline: 14px; }
+      .desk-grid { gap: 20px; grid-template-columns: minmax(0,1.48fr) minmax(254px,1fr); }
+      .metric-icon { width: 35px; height: 35px; }
+      .metric .icon { width: 17px; height: 17px; }
+    }
+    @media (max-width: 880px) {
+      :root { --sidebar: 240px; --gutter: clamp(16px, 4vw, 30px); }
+      .workspace { margin-left: 0; padding-top: 17px; }
+      .sidebar { padding: 25px 17px 20px; transform: translateX(-100%); visibility: hidden; transition: transform .28s var(--ease), visibility .28s; }
+      .sidebar > .brand { margin-bottom: 29px; }
+      .icon-button.mobile-close { display: inline-flex; position: absolute; top: 27px; right: 9px; }
+      .drawer-open .sidebar { transform: none; visibility: visible; }
+      .mobile-bar { display: flex; align-items: center; justify-content: space-between; gap: 12px; height: 58px; padding: 0 var(--gutter); border-bottom: 1px solid var(--line); background: var(--rail); }
+      .mobile-bar .brand-icon { width: 30px; height: 30px; }
+      .mobile-bar .brand-icon .icon { width: 20px; height: 20px; }
+      .mobile-bar .brand-name { font-size: 21px; }
+      .mobile-bar .brand-sub { font-size: 7px; margin-top: 4px; }
+      .mobile-backdrop { display: block; position: fixed; z-index: 11; inset: 0; background: rgba(64,57,54,.33); opacity: 0; visibility: hidden; transition: opacity .23s, visibility .23s; border: 0; }
+      .drawer-open .mobile-backdrop { opacity: 1; visibility: visible; }
+      .drawer-open { overflow: hidden; }
+      .hero-title { font-size: clamp(48px, 8.6vw, 68px); }
+    }
+    @media (max-width: 630px) {
+      .welcome-top { min-height: 29px; }
+      .welcome h1 { font-size: clamp(34px, 8.7vw, 46px); }
+      .welcome > p { margin-top: 7px; }
+      .today-meta { font-size: 10px; gap: 7px; }
+      .today-meta time .icon, .today-meta .icon-button { display: none; }
+      .welcome-tag { letter-spacing: .11em; gap: 4px; }
+      .welcome-tag::before { width: 9px; }
+      .hero { margin-top: 16px; min-height: 244px; }
+      .hero-copy { width: 100%; padding: 21px 17px; }
+      .hero-copy p:not(.micro) { max-width: 23ch; line-height: 1.3; font-size: 12px; }
+      .hero-title { font-size: clamp(45px, 11.4vw, 63px); margin-block: 12px 14px; }
+      .hero-copy .micro { font-size: 9px; letter-spacing: .16em; }
+      .hero-photo { inset: 0 0 0 13%; background-position: 57% center; mask-image: linear-gradient(90deg, transparent, rgba(0,0,0,.17) 41%, #000 92%); }
+      .hero-fallback { width: 73%; }
+      .metrics { grid-template-columns: repeat(2, minmax(0,1fr)); gap: 10px 0; padding-block: 10px; margin-top: 16px; }
+      .metric { gap: 8px; padding: 2px 6px; }
+      .metric:first-child { padding-left: 6px; }
+      .metric:nth-child(3) { border-left: 0; }
+      .metric:nth-child(even) { padding-left: 13px; }
+      .metric-count { font-size: 31px; }
+      .metric-label { margin-top: 3px; }
+      .desk-grid { grid-template-columns: 1fr; margin-top: 20px; gap: 20px; }
+      .desk-column { gap: 20px; }
+      .section-head h2 { font-size: 28px; }
+      .mini-calendar .cal-day { width: min(100%, 37px); min-height: 32px; }
+      .page-heading { align-items: flex-start; flex-direction: column; gap: 10px; padding-bottom: 15px; margin-bottom: 16px; }
+      .page-heading .actions { justify-content: flex-start; }
+      .layout-two, .calendar-layout, .setting-layout { grid-template-columns: 1fr; gap: 18px; }
+      .side-panel, .envelope-preview { border-left: 0; border-top: 1px solid var(--line); padding: 13px 0 0; position: static; }
+      .filter-bar { grid-template-columns: repeat(2, minmax(0,1fr)); gap: 6px; }
+      .filter-bar .input { font-size: 12px; }
+      .letter-grid { grid-template-columns: repeat(auto-fill, minmax(min(100%, 225px), 1fr)); }
+      .reader-toolbar { margin-bottom: 12px; }
+      .reader-toolbar .actions { gap: 5px; }
+      .reader-toolbar .button { font-size: 12px; min-height: 36px; padding: 5px 8px; }
+      .cal-events { border-top: 1px solid var(--line); padding-top: 9px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; transition-delay: 0s !important; }
+    }
+    @page { size: A4; margin: 13mm; }
+    @media print {
+      body { background: var(--white); print-color-adjust: exact; -webkit-print-color-adjust: exact; }
+      .sidebar, .mobile-bar, .mobile-backdrop, .skip-link, .reader-toolbar, .reader-footer, .toast-region, .modal { display: none !important; }
+      .workspace { margin: 0; padding: 0; }
+      .viewport.page-enter { animation: none; }
+      .reader-screen .letter-paper { width: 100%; border: 0; border-radius: 0; padding: 10mm; min-height: 0; }
+      .reader-screen .letter-paper header, .reader-screen .letter-paper figure, .reader-screen .signature { break-inside: avoid; }
+      .reader-screen .letter-paper img { max-height: 155mm; }
+    }
+  </style>
+</head>
+<body>
+  <svg xmlns="http://www.w3.org/2000/svg" width="0" height="0" aria-hidden="true" focusable="false" style="position:absolute">
+    <defs>
+      <filter id="grain"><feTurbulence type="fractalNoise" baseFrequency=".7" numOctaves="3" stitchTiles="stitch"/><feColorMatrix type="saturate" values="0"/><feComponentTransfer><feFuncA type="linear" slope=".28"/></feComponentTransfer></filter>
+    </defs>
+    <symbol id="i-brand" viewBox="0 0 24 24"><path d="M4 20c2.7-3.4 5.2-5.5 8.9-8.7m-5.6 5.3C6.2 9.4 10.8 5 20.5 3.4c-.4 2.6-1.2 4.9-2.3 6.6l-3.2 1.5 1.4.7c-2.4 2.8-5.4 4.3-9.1 4.4ZM3 21h10.1"/></symbol>
+    <symbol id="i-home" viewBox="0 0 24 24"><path d="m3 10 9-7 9 7M5 9v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V9m-9 12v-7h4v7"/></symbol>
+    <symbol id="i-pen" viewBox="0 0 24 24"><path d="M12 20h8M4 16l-1 5 5-1L20 8a2 2 0 0 0 0-3l-1-1a2 2 0 0 0-3 0L4 16Zm10-10 4 4"/></symbol>
+    <symbol id="i-file" viewBox="0 0 24 24"><path d="M6 3h8l4 4v12a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2Zm8 0v5h5M8 12h6m-6 4h6"/></symbol>
+    <symbol id="i-stack" viewBox="0 0 24 24"><path d="M8 3h11a2 2 0 0 1 2 2v13M6 6h8l4 4v9a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2Zm8 0v5h4M8 15h6m-6 3h4"/></symbol>
+    <symbol id="i-inbox" viewBox="0 0 24 24"><path d="m3 13 3-8h12l3 8v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-5Zm0 0h5l1.6 3h4.8l1.6-3h5"/></symbol>
+    <symbol id="i-mail" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3.5 7 8.5 6L20.5 7"/></symbol>
+    <symbol id="i-calendar" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M7 3v4m10-4v4M3 10h18m-14 4h2m3 0h2m3 0h.1M7 17h2m3 0h2"/></symbol>
+    <symbol id="i-heart" viewBox="0 0 24 24"><path d="M20.7 5.9a4.7 4.7 0 0 0-6.6 0L12 8l-2.1-2.1a4.7 4.7 0 0 0-6.6 6.6L12 21l8.7-8.5a4.7 4.7 0 0 0 0-6.6Z"/></symbol>
+    <symbol id="i-settings" viewBox="0 0 24 24"><path d="m9 3-.6 2.5-1.7 1-2.5-.7L2.5 9l1.9 1.8v2.3L2.5 15l1.7 3.1 2.5-.6 1.7 1 .6 2.5h4l.6-2.5 1.7-1 2.5.6 1.7-3.1-1.9-1.9v-2.3L19.5 9l-1.7-3.2-2.5.7-1.7-1L13 3H9Z" transform="translate(1 0)"/><circle cx="12" cy="12" r="3"/></symbol>
+    <symbol id="i-lock" viewBox="0 0 24 24"><rect x="5" y="10" width="14" height="11" rx="2"/><path d="M8 10V7a4 4 0 1 1 8 0v3m-4 4v3"/></symbol>
+    <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M12 7v5l3 2"/></symbol>
+    <symbol id="i-hourglass" viewBox="0 0 24 24"><path d="M6 3h12M6 21h12M8 3v4c0 2 1.6 3.6 4 5s4 3 4 5v4M16 3v4c0 2-1.6 3.6-4 5s-4 3-4 5v4m1-4h6"/></symbol>
+    <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M4 12h15m-5-5 5 5-5 5"/></symbol>
+    <symbol id="i-back" viewBox="0 0 24 24"><path d="M20 12H5m5-5-5 5 5 5"/></symbol>
+    <symbol id="i-prev" viewBox="0 0 24 24"><path d="m14 6-6 6 6 6"/></symbol>
+    <symbol id="i-next" viewBox="0 0 24 24"><path d="m10 6 6 6-6 6"/></symbol>
+    <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></symbol>
+    <symbol id="i-close" viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18"/></symbol>
+    <symbol id="i-search" viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="5.5"/><path d="m15 15 5 5"/></symbol>
+    <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12 4.5 4.5L19 7"/></symbol>
+    <symbol id="i-alert" viewBox="0 0 24 24"><path d="M12 8v5m0 3h.01M10.5 4.6 3 18a1.4 1.4 0 0 0 1.2 2h15.6a1.4 1.4 0 0 0 1.2-2L13.5 4.6a1.7 1.7 0 0 0-3 0Z"/></symbol>
+    <symbol id="i-upload" viewBox="0 0 24 24"><path d="M12 16V4m-5 5 5-5 5 5M4 15v4a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-4"/></symbol>
+    <symbol id="i-download" viewBox="0 0 24 24"><path d="M12 3v12m-5-5 5 5 5-5M4 16v4a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-4"/></symbol>
+    <symbol id="i-photo" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="8.5" cy="9" r="1.5"/><path d="m3 17 5-4 3 3 4-5 6 6"/></symbol>
+    <symbol id="i-eye" viewBox="0 0 24 24"><path d="M2.5 12s3.4-6 9.5-6 9.5 6 9.5 6-3.4 6-9.5 6-9.5-6-9.5-6Z"/><circle cx="12" cy="12" r="2.5"/></symbol>
+    <symbol id="i-print" viewBox="0 0 24 24"><path d="M7 8V3h10v5M7 17H4V9h16v8h-3M7 14h10v7H7v-7Zm-1-3h.1"/></symbol>
+    <symbol id="i-copy" viewBox="0 0 24 24"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/></symbol>
+    <symbol id="i-trash" viewBox="0 0 24 24"><path d="M4 7h16m-10 4v6m4-6v6M6 7l1 13h10l1-13M9 7V4h6v3"/></symbol>
+    <symbol id="i-more" viewBox="0 0 24 24"><circle cx="5" cy="12" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/></symbol>
+    <symbol id="i-sprig" viewBox="0 0 24 24"><path d="M7 21c4-4 7-9 8-17M13 13c-3 0-5-2-5-5 3 0 5 2 5 5Zm1-3c0-3 2-5 5-5 0 3-2 5-5 5Zm-3.5 7c-3 .3-5.7-1.2-6-4 3-.3 5.5 1.4 6 4Zm.5-.7c1-2.6 3.5-4 6.3-3.2-1 2.7-3.5 4-6.3 3.2Z"/></symbol>
+    <symbol id="i-open" viewBox="0 0 24 24"><path d="M3 11.5 12 4l9 7.5V19a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1v-7.5Zm0 .5 9 4 9-4M7 13V8m10 5V8"/></symbol>
+  </svg>
+  <a class="skip-link" href="#conteudo">Ir para o conteúdo</a>
+  <header class="mobile-bar" id="mobile-bar">
+    <a class="brand" href="#inicio" aria-label="LETTERFORM, início">
+      <span class="brand-icon"><svg class="icon" aria-hidden="true"><use href="#i-brand"/></svg></span>
+      <span><span class="brand-name">LETTERFORM</span><span class="brand-sub">Papelaria digital</span></span>
+    </a>
+    <button class="icon-button" type="button" data-action="toggle-drawer" id="menu-toggle" aria-controls="sidebar" aria-expanded="false" aria-label="Abrir navegação"><svg class="icon" aria-hidden="true"><use href="#i-menu"/></svg></button>
+  </header>
+  <button class="mobile-backdrop" type="button" tabindex="-1" data-action="close-drawer" aria-label="Fechar navegação"></button>
+  <aside class="sidebar" id="sidebar">
+    <a class="brand" href="#inicio" aria-label="LETTERFORM, início">
+      <span class="brand-icon"><svg class="icon" aria-hidden="true"><use href="#i-brand"/></svg></span>
+      <span><span class="brand-name">LETTERFORM</span><span class="brand-sub">Papelaria digital</span></span>
+    </a>
+    <button class="icon-button tiny plain mobile-close" type="button" data-action="close-drawer" aria-label="Fechar navegação"><svg class="icon" aria-hidden="true"><use href="#i-close"/></svg></button>
+    <nav aria-label="Navegação principal">
+      <p class="nav-caption micro">Escrivaninha</p>
+      <div class="nav-links">
+        <a class="nav-link" href="#inicio" data-nav="inicio" aria-current="page"><svg class="icon" aria-hidden="true"><use href="#i-home"/></svg>Início</a>
+        <a class="nav-link" href="#nova" data-nav="nova"><svg class="icon" aria-hidden="true"><use href="#i-pen"/></svg>Nova carta</a>
+        <a class="nav-link" href="#minhas" data-nav="minhas"><svg class="icon" aria-hidden="true"><use href="#i-stack"/></svg>Minhas cartas</a>
+        <a class="nav-link" href="#recebidas" data-nav="recebidas"><svg class="icon" aria-hidden="true"><use href="#i-inbox"/></svg>Recebidas</a>
+        <a class="nav-link" href="#envelopes" data-nav="envelopes"><svg class="icon" aria-hidden="true"><use href="#i-mail"/></svg>Envelopes</a>
+        <a class="nav-link" href="#calendario" data-nav="calendario"><svg class="icon" aria-hidden="true"><use href="#i-calendar"/></svg>Calendário</a>
+        <a class="nav-link" href="#favoritas" data-nav="favoritas"><svg class="icon" aria-hidden="true"><use href="#i-heart"/></svg>Favoritas</a>
+      </div>
+      <div class="nav-divider"></div>
+      <a class="nav-link" href="#configuracoes" data-nav="configuracoes"><svg class="icon" aria-hidden="true"><use href="#i-settings"/></svg>Configurações</a>
+    </nav>
+    <footer class="sidebar-footer">
+      <p class="sidebar-verse">Escreva com calma.</p>
+      <div class="side-note"><svg class="icon" aria-hidden="true"><use href="#i-lock"/></svg><span><strong>Seu espaço pessoal</strong><small>Salvo neste navegador</small></span></div>
+    </footer>
+  </aside>
+  <main class="workspace" id="workspace">
+    <div class="viewport" id="conteudo" tabindex="-1"></div>
+    <noscript><p class="notice">Ative o JavaScript no navegador para usar o LETTERFORM.</p></noscript>
+  </main>
+  <input type="file" id="import-file" accept=".json,application/json" hidden>
+  <input type="file" id="photo-file" accept=".jpg,.jpeg,.png,.webp,image/jpeg,image/png,image/webp" multiple hidden>
+  <dialog class="modal" id="modal" aria-labelledby="modal-title"></dialog>
+  <div class="toast-region" id="toasts" aria-live="polite" aria-atomic="true"></div>
+  <script>
+    'use strict';
+    const $ = (selector, parent = document) => parent.querySelector(selector);
+    const $$ = (selector, parent = document) => [...parent.querySelectorAll(selector)];
+    const view = $('#conteudo');
+    const modal = $('#modal');
+    const STORE = 'letterform.v1';
+    const LIMIT = { storage: 2100000, letter: 24000, title: 110, person: 85, caption: 140, message: 190, photos: 3, photoData: 240000, upload: 12 * 1024 * 1024, json: 1100000 };
+    const PAPER = { ivory: 'Marfim clássico', rose: 'Rosa suave', white: 'Branco puro', natural: 'Papel natural' };
+    const FONTS = { serif: 'Cormorant Garamond', sans: 'DM Sans', hand: 'Parisienne (manuscrita)' };
+    const SIZES = { small: 'Pequeno', medium: 'Médio', large: 'Grande' };
+    const TONES = { ink: 'Marrom-escuro', gray: 'Cinza quente', rose: 'Rosa queimado', taupe: 'Taupe' };
+    const ALIGNS = { left: 'Esquerda', center: 'Centro', justify: 'Justificado' };
+    const MODELS = { classic: 'Envelope clássico', rose: 'Envelope rosa', minimal: 'Envelope minimalista' };
+    const COLORS = { natural: 'Bege natural', ivory: 'Marfim', rose: 'Rosa suave', mauve: 'Malva' };
+    const CATEGORIES = ['Amor e carinho', 'Amizade', 'Família', 'Autoconhecimento', 'Futuro', 'Agradecimento', 'Livre'];
+    const CATEGORY = Object.fromEntries(CATEGORIES.map(item => [item, item]));
+    const STATES = { draft: 'Rascunho', finished: 'Finalizada', envelopeDraft: 'Envelope em rascunho', closed: 'Fechado', waiting: 'Aguardando abertura', available: 'Disponível para leitura', opened: 'Aberto' };
+    const SORTS = { recent: 'Mais recentes', oldest: 'Mais antigas', updated: 'Última atualização' };
+    const EVENT_LABEL = { written: 'Carta escrita', received: 'Carta recebida', opening: 'Abertura programada' };
+    const PAGES = { inicio: 'Início', nova: 'Nova carta', minhas: 'Minhas cartas', recebidas: 'Recebidas', envelopes: 'Envelopes', calendario: 'Calendário', favoritas: 'Favoritas', configuracoes: 'Configurações' };
+    const emptyFilters = () => ({ q: '', category: '', status: '', order: 'recent' });
+    const filters = { minhas: emptyFilters(), recebidas: emptyFilters(), favoritas: emptyFilters() };
+    let envelopeFilter = '';
+    let route = 'inicio';
+    let readingBack = '';
+    let editor = null, editorTimer = 0, envEditor = null;
+    let modalResolve = null, toastTimer = 0;
+    let stagedOpening = '', importsBusy = false;
+    let loadWarning = '';
+    let store;
+
+    function own(options, key) { return typeof key === 'string' && Object.prototype.hasOwnProperty.call(options, key); }
+    function choice(options, key, fallback) { return own(options, key) ? key : fallback; }
+    function esc(value = '') {
+      return String(value ?? '').replace(/[&<>"']/g, char => '&#' + char.charCodeAt(0) + ';');
+    }
+    function clone(value) { return JSON.parse(JSON.stringify(value)); }
+    function uid() { return globalThis.crypto?.randomUUID?.() || `lf-${Date.now().toString(36)}-${Math.random().toString(36).slice(2)}-${Math.random().toString(36).slice(2)}`; }
+    function idOK(value) { return typeof value === 'string' && /^[a-z0-9-]{1,100}$/i.test(value); }
+    function photoURL(source) {
+      return typeof source === 'string' && source.length <= LIMIT.photoData && /^data:image\/(?:jpeg|png|webp);base64,[A-Za-z0-9+/]+={0,2}$/.test(source);
+    }
+    const pad = number => String(number).padStart(2, '0');
+    function dateKey(date = new Date()) {
+      return `${String(date.getFullYear()).padStart(4, '0')}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}`;
+    }
+    function localDay(value) {
+      if (typeof value !== 'string' || !/^[1-9]\d{3}-\d{2}-\d{2}$/.test(value)) return null;
+      const [year, month, day] = value.split('-').map(Number);
+      const result = new Date(year, month - 1, day);
+      return dateKey(result) === value ? result : null;
+    }
+    function isoOK(value) {
+      if (typeof value !== 'string' || !/^[1-9]\d{3}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z$/.test(value)) return false;
+      const date = new Date(value);
+      return Number.isFinite(+date) && date.toISOString() === value;
+    }
+    const cap = value => value.charAt(0).toLocaleUpperCase('pt-BR') + value.slice(1);
+    const df = options => new Intl.DateTimeFormat('pt-BR', options);
+    const dateLong = df({ day: 'numeric', month: 'long', year: 'numeric' });
+    const dateShort = df({ day: '2-digit', month: '2-digit', year: 'numeric' });
+    const dateHeading = df({ weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
+    const dateMonth = df({ month: 'long', year: 'numeric' });
+    const dateTime = df({ hour: '2-digit', minute: '2-digit' });
+    const asDate = value => value instanceof Date ? value : (localDay(value) || (isoOK(value) ? new Date(value) : null));
+    function dateLabel(value, formatter = dateLong) { const date = asDate(value); return date ? formatter.format(date) : 'Data não informada'; }
+    function openingLabel(value) { const date = asDate(value); return date ? `${dateLong.format(date)}, às ${dateTime.format(date)}` : 'Sem data'; }
+    const monthAt = (date = new Date()) => new Date(date.getFullYear(), date.getMonth(), 1);
+    let miniMonth = monthAt();
+    let calMonth = monthAt();
+    let selectedDay = dateKey();
+
+    function defaultStyle(prefs = {}) {
+      return { paper: choice(PAPER, prefs.paper, 'ivory'), font: choice(FONTS, prefs.font, 'serif'), size: 'medium', tone: 'ink', align: 'left' };
+    }
+    function safeStyle(style = {}) {
+      style = style || {};
+      return { ...defaultStyle(style), size: choice(SIZES, style.size, 'medium'), tone: choice(TONES, style.tone, 'ink'), align: choice(ALIGNS, style.align, 'left') };
+    }
+    function safeEnvelope(value) {
+      if (!value || typeof value !== 'object') return null;
+      return {
+        model: choice(MODELS, value.model, 'classic'), color: choice(COLORS, value.color, 'natural'),
+        to: typeof value.to === 'string' ? value.to.slice(0, LIMIT.person) : '',
+        from: typeof value.from === 'string' ? value.from.slice(0, LIMIT.person) : '',
+        message: typeof value.message === 'string' ? value.message.slice(0, LIMIT.message) : '',
+        openingAt: isoOK(value.openingAt) ? value.openingAt : null,
+        sealedAt: isoOK(value.sealedAt) ? value.sealedAt : null,
+        openedAt: isoOK(value.openedAt) ? value.openedAt : null
+      };
+    }
+    function safeLetter(entry) {
+      const field = (key, max) => typeof entry[key] === 'string' ? entry[key].slice(0, max) : '';
+      return {
+        id: entry.id, title: field('title', LIMIT.title), to: field('to', LIMIT.person), from: field('from', LIMIT.person),
+        body: field('body', LIMIT.letter), category: choice(CATEGORY, entry.category, 'Livre'),
+        created: localDay(entry.created) ? entry.created : dateKey(), updatedAt: isoOK(entry.updatedAt) ? entry.updatedAt : new Date().toISOString(),
+        receivedAt: isoOK(entry.receivedAt) ? entry.receivedAt : null, readAt: isoOK(entry.readAt) ? entry.readAt : null, favorite: entry.favorite === true, draft: entry.draft !== false,
+        style: safeStyle(entry.style), envelope: safeEnvelope(entry.envelope),
+        photos: Array.isArray(entry.photos) ? entry.photos.slice(0, LIMIT.photos).filter(photo => photo && photoURL(photo.src)).map(photo => ({ id: idOK(photo.id) ? photo.id : uid(), src: photo.src, caption: typeof photo.caption === 'string' ? photo.caption.slice(0, LIMIT.caption) : '' })) : []
+      };
+    }
+    function loadStore() {
+      const settings = { name: '', paper: 'ivory', font: 'serif' };
+      let value;
+      try {
+        const raw = localStorage.getItem(STORE);
+        if (!raw) return { settings, letters: [] };
+        value = JSON.parse(raw);
+        if (!value || !Array.isArray(value.letters)) throw new Error('Estrutura desconhecida');
+      } catch (error) {
+        loadWarning = 'Não foi possível ler a biblioteca deste navegador. Confira se o armazenamento está disponível.';
+        return { settings, letters: [] };
+      }
+      if (value.settings) {
+        settings.name = typeof value.settings.name === 'string' ? value.settings.name.slice(0, 45) : '';
+        settings.paper = choice(PAPER, value.settings.paper, 'ivory');
+        settings.font = choice(FONTS, value.settings.font, 'serif');
+      }
+      return { settings, letters: value.letters.filter(entry => entry && idOK(entry.id)).map(safeLetter) };
+    }
+    function commit(next, quiet = false) {
+      try {
+        const text = JSON.stringify(next);
+        if (text.length > LIMIT.storage) throw new DOMException('Armazenamento cheio', 'QuotaExceededError');
+        localStorage.setItem(STORE, text);
+        store = next;
+        return true;
+      } catch (error) {
+        if (!quiet) toast(storageError(error), true);
+        lastStorageError = storageError(error);
+        return false;
+      }
+    }
+    let lastStorageError = '';
+    function storageError(error) {
+      return error?.name === 'QuotaExceededError' || error?.name === 'NS_ERROR_DOM_QUOTA_REACHED'
+        ? 'O espaço local está cheio. Remova fotografias ou libere espaço na biblioteca e tente novamente.'
+        : 'O navegador não permitiu salvar os dados. Verifique as permissões de armazenamento.';
+    }
+    function putLetter(letter, quiet = false) {
+      const letters = store.letters.slice();
+      const index = letters.findIndex(item => item.id === letter.id);
+      if (index < 0) letters.push(letter);
+      else letters[index] = letter;
+      return commit({ ...store, letters }, quiet);
+    }
+    const findLetter = id => store.letters.find(letter => letter.id === id);
+    function freshLetter() {
+      return { id: uid(), title: '', to: '', from: store.settings.name, body: '', category: 'Livre', created: dateKey(), updatedAt: new Date().toISOString(), receivedAt: null, readAt: null, favorite: false, draft: true, style: defaultStyle(store.settings), photos: [], envelope: null };
+    }
+    function isLocked(letter, now = Date.now()) {
+      return Boolean(letter?.envelope?.sealedAt && letter.envelope.openingAt && +new Date(letter.envelope.openingAt) > now);
+    }
+    function isReadable(letter) { return Boolean(letter && !isLocked(letter) && (!letter.envelope?.sealedAt || letter.envelope.openedAt)); }
+    function stateFor(letter, now = Date.now()) {
+      const envelope = letter.envelope;
+      if (!envelope) return letter.draft ? 'draft' : 'finished';
+      if (!envelope.sealedAt) return 'envelopeDraft';
+      if (isLocked(letter, now)) return 'waiting';
+      if (envelope.openedAt) return 'opened';
+      return envelope.openingAt ? 'available' : 'closed';
+    }
+    const titleOf = letter => letter.title.trim() || 'Carta sem título';
+    const recipient = letter => letter.to.trim() || 'Sem destinatário';
+    const sender = letter => letter.from.trim() || 'Remetente não informado';
+    const readPath = letter => `carta/${letter.id}`;
+    const editPath = letter => `editar/${letter.id}`;
+    const envelopePath = letter => `envelope/${letter.id}`;
+    const collectionOf = letter => letter?.receivedAt ? 'recebidas' : 'minhas';
+    const updateOrder = (a, b) => b.updatedAt.localeCompare(a.updatedAt);
+    const waitingLetters = () => store.letters.filter(letter => isLocked(letter)).sort((a, b) => a.envelope.openingAt.localeCompare(b.envelope.openingAt));
+
+    function icon(name, extra = '') { return `<svg class="icon${extra ? ' ' + extra : ''}" aria-hidden="true" focusable="false"><use href="#i-${name}"></use></svg>`; }
+    function link(path, text, symbol, css = 'button', trailing = false) {
+      return `<a class="${css}" href="#${path}">${symbol && !trailing ? icon(symbol, css === 'text-button' ? 'sm' : '') : ''}${esc(text)}${symbol && trailing ? icon(symbol, 'sm trailing') : ''}</a>`;
+    }
+    function action(name, text, symbol, css = 'button', attrs = '') {
+      return `<button type="button" class="${css}" data-action="${name}" ${attrs}>${symbol ? icon(symbol, css === 'text-button' ? 'sm' : '') : ''}${esc(text)}</button>`;
+    }
+    function iconButton(name, label, symbol, extra = '', attrs = '') {
+      return `<button type="button" class="icon-button${extra ? ' ' + extra : ''}" data-action="${name}" aria-label="${esc(label)}" title="${esc(label)}" ${attrs}>${icon(symbol)}</button>`;
+    }
+    function options(map, selected) { return Object.entries(map).map(([key, label]) => `<option value="${esc(key)}"${selected === key ? ' selected' : ''}>${esc(label)}</option>`).join(''); }
+    function selectField(label, name, map, value, attrs = '') {
+      return `<label class="form-field"><span>${esc(label)}</span><select class="input" name="${name}" ${attrs}>${options(map, value)}</select></label>`;
+    }
+    function textField(label, name, value, attrs = '', type = 'text') {
+      return `<label class="form-field"><span>${esc(label)}</span><input class="input" type="${type}" name="${name}" value="${esc(value)}" ${attrs}></label>`;
+    }
+    function pageHeading(kicker, heading, summary, buttons = '') {
+      return `<header class="page-heading"><div><p class="micro">${esc(kicker)}</p><h1>${esc(heading)}</h1>${summary ? `<p>${esc(summary)}</p>` : ''}</div>${buttons ? `<div class="actions">${buttons}</div>` : ''}</header>`;
+    }
+    function sectionHeading(title, actionLink = '') { return `<div class="section-head"><h2>${esc(title)}</h2>${actionLink}</div>`; }
+    function emptyArtwork() {
+      return `<svg class="empty-art" width="83" height="52" viewBox="0 0 83 52" fill="none" aria-hidden="true">
+        <path d="M24 20V9.5a2 2 0 0 1 2-2h24a2 2 0 0 1 2 2V20" stroke="currentColor" stroke-width="1.15"/>
+        <path d="M30 13h13m-13 5h17" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/>
+        <path d="m17 22 7-4m28 0 7 4v20a3 3 0 0 1-3 3H20a3 3 0 0 1-3-3V22Z" fill="var(--rose-wash)" stroke="currentColor" stroke-width="1.15" stroke-linejoin="round"/>
+        <path d="m17 23 18.7 12a4 4 0 0 0 4.6 0L59 23M18.4 43.5l12-11m27.2 11-12-11M68 13v8m-4-4h8M12 10v6m-3-3h6" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/>
+        <circle cx="70" cy="32" r="1.15" fill="currentColor"/><circle cx="9" cy="30" r="1" fill="currentColor"/>
+      </svg>`;
+    }
+    function emptyState(title, copy, cta = '', compact = false) {
+      return `<div class="empty${compact ? ' compact' : ''}">${emptyArtwork()}<h3>${esc(title)}</h3><p>${esc(copy)}</p>${cta}</div>`;
+    }
+    function toast(message, error = false) {
+      clearTimeout(toastTimer);
+      $('#toasts').innerHTML = `<div class="toast"${error ? ' role="alert"' : ''}>${icon(error ? 'alert' : 'check', 'sm')}<span>${esc(message)}</span></div>`;
+      toastTimer = setTimeout(() => { $('#toasts').textContent = ''; }, error ? 6400 : 3600);
+    }
+    function dialogBox(title, body, buttons = [], wide = false) {
+      if (modal.open || modalResolve) return Promise.resolve(null);
+      modal.returnValue = '';
+      modal.classList.toggle('wide', wide);
+      modal.innerHTML = `<header class="modal-head"><h2 id="modal-title">${esc(title)}</h2>${iconButton('close-modal', 'Fechar janela', 'close', 'plain')}</header>
+        <div class="modal-body">${body}</div>${buttons.length ? `<div class="modal-actions actions">${buttons.map(button => `<button type="button" class="button ${button.css || ''}" data-result="${esc(button.value)}">${esc(button.text)}</button>`).join('')}</div>` : ''}`;
+      return new Promise(resolve => { modalResolve = resolve; modal.showModal(); });
+    }
+    async function confirmAction(title, copy, text, css = 'danger') {
+      return await dialogBox(title, `<p class="muted">${esc(copy)}</p>`, [{ value: 'cancel', text: 'Cancelar' }, { value: 'yes', text, css }]) === 'yes';
+    }
+    async function busy(button, label, task) {
+      const html = button?.innerHTML;
+      if (button) {
+        button.disabled = true;
+        button.setAttribute('aria-busy', 'true');
+        button.innerHTML = `<span class="spinner" aria-hidden="true"></span>${esc(label)}`;
+      }
+      try { return await task(); }
+      finally {
+        if (button?.isConnected) {
+          button.disabled = false;
+          button.removeAttribute('aria-busy');
+          button.innerHTML = html;
+        }
+      }
+    }
+    function parseRoute(hash) {
+      const value = hash.replace(/^#/, '');
+      if (own(PAGES, value)) return value;
+      const [page, id, extra] = value.split('/');
+      if (extra === undefined && ['nova', 'carta', 'editar', 'envelope'].includes(page) && idOK(id)) return value;
+      return 'inicio';
+    }
+    function drawer(open, restoreFocus = false) {
+      const toggle = $('#menu-toggle');
+      document.body.classList.toggle('drawer-open', open);
+      $('#workspace').inert = open;
+      $('#mobile-bar').inert = open;
+      toggle.setAttribute('aria-expanded', String(open));
+      toggle.setAttribute('aria-label', open ? 'Fechar navegação' : 'Abrir navegação');
+      if (open) $('#sidebar [aria-current="page"]')?.focus();
+      if (!open && restoreFocus) toggle.focus();
+    }
+    function markNav() {
+      const [page, id] = route.split('/');
+      const active = page === 'envelope' ? 'envelopes' : ['carta', 'editar'].includes(page) ? collectionOf(findLetter(id)) : page;
+      for (const item of $$('[data-nav]')) {
+        if (item.dataset.nav === active) item.setAttribute('aria-current', 'page');
+        else item.removeAttribute('aria-current');
+      }
+    }
+    async function go(next, { fromHash = false, skipGuard = false, focus = true } = {}) {
+      next = parseRoute(next);
+      if (next === route) { if (document.body.classList.contains('drawer-open')) drawer(false, true); return true; }
+      if (!skipGuard && editor?.processing) {
+        toast('Aguarde o processamento das fotografias.');
+        if (fromHash) history.replaceState(null, '', '#' + route);
+        return false;
+      }
+      if (!skipGuard && editor?.unsaved && !saveEditor('auto')) {
+        if (!await confirmAction('Sair sem salvar?', 'As alterações mais recentes não foram salvas e serão perdidas.', 'Sair sem salvar')) {
+          if (fromHash) history.replaceState(null, '', '#' + route);
+          return false;
+        }
+      }
+      if (!skipGuard && envEditor?.dirty) {
+        if (!await confirmAction('Descartar alterações?', 'O modelo e as informações do envelope ainda não foram salvos.', 'Descartar alterações')) {
+          if (fromHash) history.replaceState(null, '', '#' + route);
+          return false;
+        }
+      }
+      if (next.startsWith('carta/')) {
+        if (route === 'nova' || route.startsWith('nova/')) readingBack = '';
+        else if (own(PAGES, route)) readingBack = route;
+        else if (!route.endsWith('/' + next.split('/')[1])) readingBack = '';
+      }
+      clearTimeout(editorTimer);
+      editor = null;
+      envEditor = null;
+      if (document.body.classList.contains('drawer-open')) drawer(false);
+      route = next;
+      if (!fromHash) history.pushState(null, '', '#' + route);
+      renderPage(true);
+      window.scrollTo(0, 0);
+      if (focus) view.focus({ preventScroll: true });
+      return true;
+    }
+    function missingPage() {
+      return pageHeading('Correspondência', 'Carta indisponível', 'Esta carta não foi encontrada na biblioteca deste navegador.') + emptyState('Nenhuma carta neste endereço', 'Volte para consultar suas correspondências.', link('minhas', 'Ver minhas cartas', 'stack'));
+    }
+    function heroBackdrop() {
+      return `<svg class="hero-fallback" viewBox="0 0 690 292" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+        <g transform="translate(225 21) rotate(10 193 116)">
+          <rect x="12" y="14" width="374" height="227" rx="3" fill="var(--taupe)" opacity=".13"/>
+          <rect x="0" y="0" width="374" height="227" rx="3" fill="var(--ivory)" stroke="var(--line)"/>
+          <path d="M0 15 187 161 374 15M0 220l123-105m251 105L251 115" fill="none" stroke="var(--line)" stroke-width="2"/>
+          <path d="M0 0h374L195 146a13 13 0 0 1-16 0Z" fill="var(--paper)" stroke="var(--line)"/>
+          <circle cx="189" cy="148" r="25" fill="var(--rose)" stroke="var(--mauve)" stroke-width="3"/>
+          <circle cx="189" cy="148" r="18" fill="none" stroke="var(--accent)" opacity=".42"/>
+          <use href="#i-sprig" x="177" y="136" width="24" height="24" fill="none" stroke="var(--accent)" stroke-width="1" stroke-linejoin="round"/>
+        </g>
+      </svg><div class="hero-photo" aria-hidden="true"></div><svg class="hero-grain" aria-hidden="true" focusable="false"><rect width="100%" height="100%" filter="url(#grain)"/></svg>`;
+    }
+    function eventIndex() {
+      const map = new Map();
+      function insert(key, type, letter) {
+        if (!map.has(key)) map.set(key, []);
+        map.get(key).push({ type, letter });
+      }
+      for (const letter of store.letters) {
+        if (letter.receivedAt) insert(dateKey(new Date(letter.receivedAt)), 'received', letter);
+        else if (!letter.draft) insert(letter.created, 'written', letter);
+        if (letter.envelope?.sealedAt && letter.envelope.openingAt) insert(dateKey(new Date(letter.envelope.openingAt)), 'opening', letter);
+      }
+      return map;
+    }
+    function calendarMarkup(month, mini = false) {
+      const shift = month.getDay();
+      const end = new Date(month.getFullYear(), month.getMonth() + 1, 0).getDate();
+      const count = Math.max(35, Math.ceil((shift + end) / 7) * 7);
+      const index = eventIndex();
+      const today = dateKey();
+      const shortWeekdays = mini ? ['D', 'S', 'T', 'Q', 'Q', 'S', 'S'] : ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'];
+      const weekdays = ['Domingo', 'Segunda-feira', 'Terça-feira', 'Quarta-feira', 'Quinta-feira', 'Sexta-feira', 'Sábado'];
+      const prefix = mini ? 'mini' : 'full';
+      let days = '';
+      for (let offset = 0; offset < count; offset++) {
+        const date = new Date(month.getFullYear(), month.getMonth(), offset - shift + 1);
+        const key = dateKey(date);
+        const events = index.get(key) || [];
+        const labels = [...new Set(events.map(event => event.type))];
+        const active = !mini && selectedDay === key;
+        const tag = `${cap(dateHeading.format(date))}${events.length ? `, ${events.length} ${events.length === 1 ? 'evento' : 'eventos'}` : ''}`;
+        days += `<button type="button" class="cal-day${date.getMonth() !== month.getMonth() ? ' is-outside' : ''}${key === today ? ' is-today' : ''}${active ? ' is-selected' : ''}" data-action="${prefix}-day" data-day="${key}" aria-label="${esc(tag)}"${key === today ? ' aria-current="date"' : ''}${mini ? '' : ` aria-pressed="${active}"`}>
+          <span>${date.getDate()}</span>${labels.length ? `<span class="event-dots" aria-hidden="true">${labels.map(type => `<i class="event-dot ${type}"></i>`).join('')}</span>` : ''}</button>`;
+      }
+      const currentMonth = monthAt();
+      const canPrev = month.getFullYear() > 1000 || month.getMonth() > 0;
+      const canNext = month.getFullYear() < 9999 || month.getMonth() < 11;
+      return `<div class="month-bar"><h3>${esc(cap(dateMonth.format(month)))}</h3><div class="actions">
+        ${!mini && +currentMonth !== +month ? action('calendar-today', 'Hoje', '', 'text-button') : ''}
+        <div class="month-controls">
+          ${iconButton(prefix + '-month', 'Mês anterior', 'prev', 'tiny', `data-step="-1" ${canPrev ? '' : 'disabled'}`)}
+          ${iconButton(prefix + '-month', 'Próximo mês', 'next', 'tiny', `data-step="1" ${canNext ? '' : 'disabled'}`)}
+        </div></div></div><div class="cal-grid">${shortWeekdays.map((label, i) => `<span class="cal-week" title="${weekdays[i]}" aria-label="${weekdays[i]}">${label}</span>`).join('')}${days}</div>`;
+    }
+    function miniMarkup() {
+      return `${calendarMarkup(miniMonth, true)}<p class="cal-note">${icon('calendar', 'sm')} Selecione uma data para ver suas cartas.</p>`;
+    }
+    function summaryRow(letter, copy, symbol, path = readPath(letter)) {
+      return `<a class="list-row" href="#${path}"><span class="row-icon">${icon(symbol)}</span><div class="row-copy"><h3>${esc(titleOf(letter))}</h3><p>${esc(copy)}</p></div>${icon('next', 'sm')}</a>`;
+    }
+    function upcomingMarkup() {
+      const letters = waitingLetters();
+      if (letters.length) return letters.slice(0, 3).map(letter => summaryRow(letter, openingLabel(letter.envelope.openingAt), 'hourglass')).join('');
+      return `<p class="quiet-row">${icon('clock', 'sm')} Nenhuma abertura programada no momento.</p>`;
+    }
+    function dashboardView() {
+      const recent = [...store.letters].sort(updateOrder).slice(0, 3);
+      const today = new Date();
+      const metrics = [
+        ['stack', store.letters.filter(letter => !letter.receivedAt && !letter.draft).length, 'Cartas escritas'],
+        ['inbox', store.letters.filter(letter => letter.receivedAt).length, 'Cartas recebidas'],
+        ['hourglass', waitingLetters().length, 'Aguardando abertura'],
+        ['heart', store.letters.filter(letter => letter.favorite).length, 'Cartas favoritas']
+      ];
+      return `<header class="welcome">
+          <div class="welcome-top"><p class="micro welcome-tag">Sua escrivaninha</p><div class="today-meta">
+            <time datetime="${dateKey(today)}" id="welcome-date">${icon('calendar', 'sm')}<span>${esc(cap(dateHeading.format(today)))}</span></time>
+            <a class="icon-button" href="#configuracoes" aria-label="Configurações" title="Configurações">${icon('settings', 'sm')}</a>
+          </div></div>
+          <h1>${esc(store.settings.name ? `Olá, ${store.settings.name}.` : 'Olá, que bom ter você aqui.')}</h1>
+          <p>Um lugar para escrever com calma e guardar o que importa.</p>
+        </header>
+        <section class="hero" aria-labelledby="hero-title">${heroBackdrop()}
+          <div class="hero-copy"><p class="micro">A papelaria LETTERFORM</p>
+            <h2 class="hero-title" id="hero-title">Palavras que <em>permanecem.</em></h2>
+            <p>Algumas histórias merecem ser guardadas.</p>
+            ${link('nova', 'Escrever uma carta', 'brand', 'button primary')}
+          </div>
+        </section>
+        <section class="metrics" aria-label="Resumo das suas correspondências">
+          ${metrics.map(([symbol, count, label], i) => `<div class="metric"><span class="metric-icon">${icon(symbol)}</span><div><strong class="metric-count"${i === 2 ? ' id="waiting-count"' : ''}>${count}</strong><span class="metric-label">${label}</span></div></div>`).join('')}
+        </section>
+        <div class="desk-grid">
+          <div class="desk-column">
+            <section>${sectionHeading('Cartas recentes', link('minhas', 'Ver todas', 'arrow', 'text-button', true))}<div id="dash-recent">
+              ${recent.length ? recentRows(recent) : emptyState('Nenhuma carta por aqui', 'Sua primeira história começa com algumas palavras.', link('nova', 'Escrever minha primeira carta', 'arrow', 'text-button', true), true)}
+            </div></section>
+            <section>${sectionHeading('Próximas aberturas', link('envelopes', 'Ver envelopes', 'arrow', 'text-button', true))}<div id="dash-upcoming">${upcomingMarkup()}</div></section>
+          </div>
+          <section>${sectionHeading('Calendário', link('calendario', 'Ver calendário', 'arrow', 'text-button', true))}<div class="mini-calendar" id="mini-calendar">${miniMarkup()}</div></section>
+        </div>
+        <section class="dash-shortcuts">${sectionHeading('À mão')}<div class="shortcut-row">
+          ${action('import', 'Importar uma carta', 'upload', 'text-button')}
+          ${action('choose-envelope', 'Preparar um envelope', 'mail', 'text-button')}
+          ${link('favoritas', 'Consultar favoritas', 'heart', 'text-button')}
+        </div></section>`;
+    }
+    function calendarEventsMarkup() {
+      const events = (eventIndex().get(selectedDay) || []).slice().sort((a, b) => updateOrder(a.letter, b.letter));
+      const day = localDay(selectedDay);
+      return `<p class="micro">Correspondências do dia</p><h2>${esc(day ? cap(dateHeading.format(day)) : 'Selecione uma data')}</h2>
+        ${events.length ? events.map(({ letter, type }) => summaryRow(letter,
+          `${EVENT_LABEL[type]}${type === 'opening' ? ` às ${dateTime.format(new Date(letter.envelope.openingAt))}` : ''} · ${type === 'received' ? `De ${sender(letter)}` : `Para ${recipient(letter)}`}`,
+          type === 'opening' ? 'hourglass' : type === 'received' ? 'inbox' : 'file')).join('') : `<p class="quiet-row">${icon('calendar', 'sm')} Nenhuma correspondência neste dia.</p>`}`;
+    }
+    function calendarView() {
+      return `${pageHeading('Escrivaninha', 'Calendário', 'Acompanhe as datas em que suas histórias foram escritas, recebidas ou programadas.')}
+        <div class="calendar-layout"><section class="full-calendar" aria-label="Calendário mensal"><div id="full-calendar">${calendarMarkup(calMonth)}</div>
+          <div class="cal-legend" aria-label="Legenda">${Object.entries(EVENT_LABEL).map(([type, label]) => `<span><i class="event-dot ${type}" aria-hidden="true"></i>${esc(label)}</span>`).join('')}</div>
+        </section><section class="cal-events" id="cal-events" aria-live="polite">${calendarEventsMarkup()}</section></div>`;
+    }
+    function currentLibrary(page) {
+      return store.letters.filter(letter => page === 'minhas' ? !letter.receivedAt : page === 'recebidas' ? Boolean(letter.receivedAt) : letter.favorite);
+    }
+    const folded = value => String(value).normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase('pt-BR');
+    const favoriteButton = letter => iconButton('favorite', letter.favorite ? 'Remover dos favoritos' : 'Marcar como favorita', 'heart', `plain${letter.favorite ? ' marked' : ''}`, `data-id="${letter.id}" aria-pressed="${letter.favorite}"`);
+    function letterTile(letter) {
+      const showPhoto = isReadable(letter) && letter.photos.length;
+      const cover = showPhoto ? `<img src="${esc(letter.photos[0].src)}" alt="" loading="lazy">` : icon(letter.envelope ? 'mail' : 'file');
+      const coverPaper = isReadable(letter) ? letter.style.paper : 'natural';
+      const row = letter.receivedAt ? `De ${sender(letter)}` : `Para ${recipient(letter)}`;
+      const date = letter.receivedAt ? `Recebida em ${dateLabel(letter.receivedAt, dateShort)}` : `Criada em ${dateLabel(letter.created, dateShort)}`;
+      const state = letter.receivedAt && !letter.envelope?.sealedAt ? (letter.readAt ? 'Lida' : 'Não lida') : STATES[stateFor(letter)];
+      const menuItem = (name, label, symbol) => action(name, label, symbol, '', `data-id="${letter.id}"`);
+      const controls = `<details class="item-menu"><summary class="icon-button plain" aria-label="Opções da carta" title="Opções da carta">${icon('more')}</summary><div class="menu-list">
+        ${link(readPath(letter), 'Visualizar', 'eye', '')}
+        ${!letter.receivedAt && isReadable(letter) ? link(editPath(letter), 'Editar', 'pen', '') : ''}
+        ${isReadable(letter) ? menuItem('duplicate', 'Duplicar', 'copy') : ''}
+        ${!letter.draft ? menuItem('export-json', 'Exportar JSON', 'download') : ''}
+        ${menuItem('delete-letter', 'Excluir', 'trash')}
+      </div></details>`;
+      return `<article class="letter-tile">
+        <a class="tile-cover" href="#${readPath(letter)}" data-paper="${coverPaper}" aria-label="${esc('Ver ' + titleOf(letter))}">${cover}</a>
+        <div class="tile-content"><h2><a href="#${readPath(letter)}">${esc(titleOf(letter))}</a></h2><p>${esc(row)}</p><p>${esc(letter.category)} · ${esc(date)}</p><p>Atualizada em ${esc(dateLabel(letter.updatedAt, dateShort))}</p></div>
+        <div class="tile-bottom"><span class="status-label">${esc(state)}</span><div class="actions">${favoriteButton(letter)}${controls}</div></div>
+      </article>`;
+    }
+    function libraryResults(page) {
+      const base = currentLibrary(page);
+      const filter = filters[page];
+      const terms = folded(filter.q).trim();
+      const statusMatches = letter => !filter.status || (filter.status === 'read' || filter.status === 'unread'
+        ? letter.receivedAt && Boolean(letter.readAt) === (filter.status === 'read')
+        : stateFor(letter) === filter.status);
+      const rows = base.filter(letter => (!filter.category || letter.category === filter.category) && statusMatches(letter) &&
+        (!terms || folded(`${letter.title} ${letter.to} ${letter.from} ${letter.category}${isReadable(letter) ? ' ' + letter.body : ''}`).includes(terms)));
+      const when = letter => letter.receivedAt || letter.created;
+      rows.sort(filter.order === 'updated' ? updateOrder : filter.order === 'oldest' ? (a,b) => when(a).localeCompare(when(b)) || updateOrder(a,b) : (a,b) => when(b).localeCompare(when(a)) || updateOrder(a,b));
+      if (rows.length) return `<p class="fine result-count">${rows.length} ${rows.length === 1 ? 'carta' : 'cartas'}</p><div class="letter-grid">${rows.map(letterTile).join('')}</div>`;
+      if (terms || filter.status || filter.category) return emptyState('Nenhuma carta encontrada', 'Tente mudar a pesquisa ou ajustar os filtros.', action('reset-filters', 'Limpar filtros', 'close'));
+      if (page === 'recebidas') return emptyState('Nenhuma carta recebida', 'Quando alguém compartilhar uma carta com você, importe o arquivo para guardá-la aqui.', action('import', 'Importar uma carta', 'upload', 'button primary'));
+      if (page === 'favoritas') return emptyState('Aqui ficam as mais queridas', 'Marque o coração de uma carta para encontrá-la mais tarde nesta seleção.', link('minhas', 'Explorar minhas cartas', 'stack'));
+      return emptyState('Sua biblioteca começa aqui', 'As cartas e os rascunhos que você escrever ficam reunidos neste espaço.', link('nova', 'Escrever uma carta', 'brand', 'button primary'));
+    }
+    function libraryView(page) {
+      const filter = filters[page];
+      const desc = {
+        minhas: 'Seus rascunhos e cartas finalizadas, todos no mesmo lugar.',
+        recebidas: 'Correspondências compartilhadas com você por arquivo.',
+        favoritas: 'Uma seleção das cartas às quais você quer voltar.'
+      };
+      const cta = page === 'minhas' ? link('nova', 'Nova carta', 'plus', 'button primary') : page === 'recebidas' ? action('import', 'Importar carta', 'upload', 'button primary') : '';
+      const states = page === 'recebidas' ? { '': 'Todos os estados', unread: 'Não lidas', read: 'Lidas', closed: STATES.closed, waiting: STATES.waiting, available: STATES.available, opened: STATES.opened } : { '': 'Todos os estados', ...STATES };
+      return `${pageHeading('Sua biblioteca', PAGES[page], desc[page], cta)}
+        <div class="filter-bar" aria-label="Filtros da biblioteca">
+          <label class="search-field"><span class="sr-only">Pesquisar cartas</span>${icon('search')}<input class="input" type="search" placeholder="Pesquisar cartas" value="${esc(filter.q)}" data-filter="q" maxlength="150"></label>
+          <label><span class="sr-only">Categoria</span><select class="input" data-filter="category">${options({ '': 'Todas as categorias', ...CATEGORY }, filter.category)}</select></label>
+          <label><span class="sr-only">Estado</span><select class="input" data-filter="status">${options(states, filter.status)}</select></label>
+          <label><span class="sr-only">Ordenação</span><select class="input" data-filter="order">${options(SORTS, filter.order)}</select></label>
+        </div><section id="library-results" aria-label="Cartas na biblioteca">${libraryResults(page)}</section>`;
+    }
+    function styleAttrs(style) { return Object.entries(style).map(([key, value]) => `data-${key}="${esc(value)}"`).join(' '); }
+    function editorPhotosMarkup(letter) {
+      return letter.photos.map((photo, i) => `<div class="photo-edit">
+        <img src="${esc(photo.src)}" alt="${esc(`Foto ${i + 1} anexada`)}">
+        <input class="input" type="text" data-caption="${photo.id}" aria-label="Legenda da foto ${i + 1}" placeholder="Legenda opcional" maxlength="${LIMIT.caption}" value="${esc(photo.caption)}">
+        ${iconButton('remove-photo', `Remover foto ${i + 1}`, 'close', 'tiny plain', `data-id="${photo.id}"`)}
+      </div>`).join('');
+    }
+    function editorView(existing = null) {
+      if (existing && (existing.receivedAt || !isReadable(existing))) {
+        return pageHeading('Correspondência', 'Carta não editável', 'As cartas recebidas não são alteradas. Para editar uma carta sua que está em um envelope, abra-o primeiro.') + link(readPath(existing), 'Voltar à carta', 'back');
+      }
+      if (!editor) editor = { value: existing ? clone(existing) : freshLetter(), original: existing ? clone(existing) : null, unsaved: false, changed: false, processing: false, status: 'Salvamento automático ativo', statusIcon: 'clock' };
+      const letter = editor.value;
+      const draftName = existing && existing.draft ? 'Editar rascunho' : existing ? 'Editar carta' : 'Nova carta';
+      return `${pageHeading('Mesa de escrita', draftName, 'Comece pelas palavras. O restante pode esperar.',
+        action('preview', 'Pré-visualizar', 'eye') + action('save-letter', letter.draft ? 'Salvar rascunho' : 'Salvar agora', 'check') + action('finalize', letter.draft ? 'Finalizar carta' : 'Salvar e ler', '', 'button primary'))}
+        <div class="layout-two">
+          <section aria-label="Escrever carta">
+            <form id="editor-form">
+              <div class="editor-meta">
+                <div class="full">${textField('Título da carta', 'title', letter.title, `maxlength="${LIMIT.title}" placeholder="Dê um nome à sua carta"`)}</div>
+                ${textField('Destinatário', 'to', letter.to, `maxlength="${LIMIT.person}" placeholder="Para quem você escreve?"`)}
+                ${textField('Remetente', 'from', letter.from, `maxlength="${LIMIT.person}" placeholder="Seu nome"`)}
+                ${textField('Data de criação', 'created', letter.created, `min="1000-01-01" max="${dateKey()}"`, 'date')}
+                ${selectField('Categoria', 'category', CATEGORY, letter.category)}
+              </div>
+              <div class="editor-sheet" id="editor-sheet" ${styleAttrs(letter.style)}>
+                <label class="field-label" for="editor-body">Texto da carta</label>
+                <textarea class="styled-body" id="editor-body" name="body" maxlength="${LIMIT.letter}" placeholder="Querida pessoa,&#10;&#10;Hoje eu quis escrever para você...">
+${esc(letter.body)}</textarea>
+              </div>
+            </form>
+            <div class="reader-toolbar"><p class="editor-status fine" id="editor-status" role="status">${icon(editor.statusIcon, 'sm')}<span>${esc(editor.status)}</span></p>${action('discard-editor', 'Descartar alterações', '', 'text-button')}</div>
+          </section>
+          <aside aria-label="Personalização da carta">
+            <section class="side-panel"><h2>Estilo da carta</h2>
+              <div class="form-stack" id="editor-styles">
+                ${selectField('Tipografia', 'font', FONTS, letter.style.font)}
+                <div class="field-row">${selectField('Tamanho', 'size', SIZES, letter.style.size)}${selectField('Alinhamento', 'align', ALIGNS, letter.style.align)}</div>
+                ${selectField('Cor do texto', 'tone', TONES, letter.style.tone)}
+                <div><p class="field-label" id="paper-label">Modelo de papel</p><div class="choices" role="group" aria-labelledby="paper-label">${Object.entries(PAPER).map(([key, name]) => `<button type="button" class="choice" data-action="select-paper" data-paper-choice="${key}" aria-pressed="${letter.style.paper === key}"><span class="paper-swatch" data-paper="${key}"></span>${esc(name)}</button>`).join('')}</div></div>
+              </div>
+            </section>
+            <section class="side-panel"><h2>Fotografias</h2><p class="fine">Inclua até ${LIMIT.photos} fotos JPG/JPEG, PNG ou WebP, de até 12 MB cada.</p>
+              <div class="editor-photos" id="editor-photos">${editorPhotosMarkup(letter)}</div>
+              ${action('add-photo', 'Adicionar fotografias', 'photo', 'button', `id="photo-trigger"${letter.photos.length >= LIMIT.photos ? ' disabled' : ''}`)}
+              <p class="fine photos-help" id="photo-count">${letter.photos.length} de ${LIMIT.photos} fotos</p>
+            </section>
+          </aside>
+        </div>`;
+    }
+    function paperMarkup(letter, preview = false) {
+      const heading = preview ? 'h2' : 'h1';
+      return `<article class="letter-paper" ${styleAttrs(letter.style)}>
+        <header><p class="micro">${esc(letter.category)} · ${esc(dateLabel(letter.created))}</p><${heading}>${esc(titleOf(letter))}</${heading}>
+          <div class="letter-meta"><span><strong>De:</strong> ${esc(sender(letter))}</span><span><strong>Para:</strong> ${esc(recipient(letter))}</span></div>
+        </header>
+        <div class="styled-body">${esc(letter.body) || '<span class="muted">O papel ainda está em branco.</span>'}</div>
+        ${letter.from.trim() ? `<p class="signature">${esc(sender(letter))}</p>` : ''}
+        ${letter.photos.length ? `<div class="letter-photos">${letter.photos.map((photo, i) => `<figure><img src="${esc(photo.src)}" alt="${esc(photo.caption || `Fotografia ${i + 1} da carta`)}">${photo.caption ? `<figcaption>${esc(photo.caption)}</figcaption>` : ''}</figure>`).join('')}</div>` : ''}
+      </article>`;
+    }
+    function envelopeArt(envelope, open = false) {
+      return `<div class="envelope-stage${open ? ' is-open' : ''}" data-model="${envelope.model}" data-color="${envelope.color}" aria-hidden="true">
+        <div class="env-back"></div><div class="env-flap"></div><div class="env-insert">${icon('brand')}</div><div class="env-pocket"></div><div class="env-seal">${icon(envelope.model === 'minimal' ? 'brand' : 'sprig')}</div>
+      </div>`;
+    }
+    function readerView(letter) {
+      const back = readingBack || collectionOf(letter);
+      const goBack = link(back, 'Voltar', 'back', 'text-button');
+      const id = `data-id="${letter.id}"`;
+      const share = !letter.draft ? action('export-json', 'Exportar JSON', 'download', 'button subtle', id) : '';
+      const envEdit = !letter.receivedAt && !letter.draft && !isLocked(letter) ? link(envelopePath(letter), letter.envelope ? 'Editar envelope' : 'Preparar envelope', 'mail', 'button subtle') : '';
+      if (!isReadable(letter) || stagedOpening === letter.id) {
+        const env = letter.envelope;
+        const locked = isLocked(letter);
+        const opening = stagedOpening === letter.id;
+        return `<div class="reader-toolbar">${goBack}<div class="actions">${share}${envEdit}</div></div><section class="sealed-screen" aria-labelledby="sealed-title">
+          <p class="micro">${esc(opening ? 'Abrindo envelope' : STATES[stateFor(letter)])}</p><h1 id="sealed-title">${esc(titleOf(letter))}</h1>
+          <p>Para <strong>${esc(env.to || recipient(letter))}</strong> · De ${esc(env.from || sender(letter))}</p>
+          ${envelopeArt(env, opening)}${env.message ? `<p class="outside-message">${esc(env.message)}</p>` : ''}
+          ${locked ? `<p>Disponível em <time datetime="${env.openingAt}">${esc(openingLabel(env.openingAt))}</time>.</p><p class="countdown" data-countdown="${env.openingAt}">${esc(countdown(env.openingAt))}</p>` : opening ? `<p class="fine" role="status">Abrindo a correspondência...</p>` : `<div class="actions">${action('open-envelope', 'Abrir envelope', 'open', 'button primary', id)}</div>`}
+        </section>`;
+      }
+      return `<div class="reader-toolbar">${goBack}<div class="actions">
+        ${!letter.receivedAt ? link(editPath(letter), 'Editar', 'pen') : ''}
+        ${action('print', 'Imprimir', 'print', 'button subtle', id)}
+        ${action('export-pdf', 'Exportar em PDF', 'download', 'button primary', id)}
+        </div></div>${paperMarkup(letter)}
+        <div class="reader-footer actions">${favoriteButton(letter)}${share}${envEdit}${letter.draft ? '<span class="fine">Finalize o rascunho para compartilhar por arquivo ou criar um envelope.</span>' : ''}</div>`;
+    }
+    function envelopeResults() {
+      const envelopes = store.letters.filter(letter => letter.envelope).sort(updateOrder);
+      const rows = envelopes.filter(letter => !envelopeFilter || stateFor(letter) === envelopeFilter);
+      if (!rows.length && envelopeFilter) return emptyState('Nenhum envelope neste estado', 'Escolha outro estado para consultar suas cartas.', action('reset-envelopes', 'Ver todos os envelopes', 'close'));
+      if (!envelopes.length) return emptyState('Ainda não há envelopes', 'Escolha uma carta finalizada e dê a ela um envelope para o presente ou para o futuro.', action('choose-envelope', 'Preparar um envelope', 'mail', 'button primary'));
+      return `<div class="letter-grid">${rows.map(letter => {
+        const env = letter.envelope;
+        const status = stateFor(letter);
+        const canEdit = !letter.receivedAt && !isLocked(letter);
+        return `<article class="letter-tile envelope-card">
+          <a class="env-card-art" href="#${status === 'envelopeDraft' && canEdit ? envelopePath(letter) : readPath(letter)}" aria-label="${esc('Ver envelope: ' + titleOf(letter))}">${envelopeArt(env, status === 'opened')}</a>
+          <div class="tile-content"><h2><a href="#${readPath(letter)}">${esc(titleOf(letter))}</a></h2><p>Para ${esc(env.to || recipient(letter))} · De ${esc(env.from || sender(letter))}</p>
+            ${env.openingAt ? `<p>${status === 'envelopeDraft' ? 'Data proposta' : 'Data de abertura'}: ${esc(openingLabel(env.openingAt))}</p>` : `<p>${esc(MODELS[env.model])} · ${esc(COLORS[env.color])}</p>`}
+            ${status === 'waiting' ? `<p data-countdown="${env.openingAt}">${esc(countdown(env.openingAt))}</p>` : ''}
+          </div><div class="tile-bottom"><span class="status-label">${esc(STATES[status])}</span>${canEdit ? link(envelopePath(letter), 'Editar', 'pen', 'text-button') : link(readPath(letter), 'Ver envelope', 'next', 'text-button', true)}</div>
+        </article>`;
+      }).join('')}</div>`;
+    }
+    function envelopeLibraryView() {
+      return `${pageHeading('Papelaria digital', 'Envelopes', 'Feche uma carta com cuidado e escolha quando ela poderá ser aberta.', action('choose-envelope', 'Criar envelope', 'plus', 'button primary'))}
+        <label class="form-field envelope-filter"><span>Estado do envelope</span><select class="input" id="envelope-filter">${options({ '': 'Todos os envelopes', envelopeDraft: 'Rascunhos', closed: STATES.closed, waiting: STATES.waiting, available: STATES.available, opened: STATES.opened }, envelopeFilter)}</select></label>
+        <section id="envelope-results" aria-label="Meus envelopes">${envelopeResults()}</section>`;
+    }
+    function envelopeEditorView(letter) {
+      if (letter.receivedAt || letter.draft || isLocked(letter)) {
+        return pageHeading('Papelaria digital', 'Envelope indisponível', 'Prepare envelopes a partir das suas cartas finalizadas que não estiverem aguardando abertura.') + link(readPath(letter), 'Voltar à carta', 'back');
+      }
+      if (!envEditor) envEditor = { id: letter.id, dirty: false, value: letter.envelope ? clone(letter.envelope) : { model: 'classic', color: 'natural', to: letter.to, from: letter.from, message: '', openingAt: null, sealedAt: null, openedAt: null } };
+      const env = envEditor.value;
+      const local = env.openingAt ? new Date(env.openingAt) : null;
+      const label = env.sealedAt ? 'Atualizar e fechar' : 'Fechar envelope';
+      return `${pageHeading('Papelaria digital', letter.envelope ? 'Editar envelope' : 'Preparar envelope', `Uma apresentação para “${titleOf(letter)}”.`, link(readPath(letter), 'Voltar à carta', 'back'))}
+        <div class="layout-two">
+          <form id="envelope-form" class="form-stack" novalidate>
+            <div class="field-row">${selectField('Modelo', 'model', MODELS, env.model)}${selectField('Cor', 'color', COLORS, env.color)}</div>
+            <div class="field-row">${textField('Destinatário no envelope', 'to', env.to, `maxlength="${LIMIT.person}" placeholder="Para..." required`)}${textField('Remetente no envelope', 'from', env.from, `maxlength="${LIMIT.person}" placeholder="De..." required`)}</div>
+            <label class="form-field"><span>Mensagem externa</span><textarea class="input" name="message" maxlength="${LIMIT.message}" rows="2" placeholder="Uma breve mensagem antes de abrir...">${esc(env.message)}</textarea></label>
+            <label class="field-check"><input type="checkbox" name="schedule"${local ? ' checked' : ''}><span>Programar data de abertura</span></label>
+            <div class="form-stack" id="opening-fields"${local ? '' : ' hidden'}>
+              <div class="field-row">${textField('Data de abertura', 'openingDate', local ? dateKey(local) : '', `min="${dateKey()}"${local ? ' required' : ''}`, 'date')}${textField('Horário local', 'openingTime', local ? `${pad(local.getHours())}:${pad(local.getMinutes())}` : '', local ? 'required' : '', 'time')}</div>
+              <p class="notice">A carta ficará indisponível até esta data na interface. A programação usa o horário local e não protege o arquivo contra acesso direto.</p>
+            </div>
+            <p class="notice" id="envelope-error" role="alert" hidden></p>
+            <div class="actions">
+              ${!env.sealedAt ? action('save-envelope-draft', 'Salvar rascunho', 'check') : ''}
+              <button class="button primary" type="submit">${icon('lock')}${label}</button>
+              ${letter.envelope ? action('remove-envelope', 'Remover envelope', '', 'text-button', `data-id="${letter.id}"`) : ''}
+            </div>
+          </form>
+          <section class="envelope-preview"><p class="micro">Detalhes do papel</p><h2>Pré-visualização</h2><div id="env-art">${envelopeArt(env)}</div><p class="fine" id="env-address">${esc(`Para ${env.to || '...'} · De ${env.from || '...'}`)}</p><p class="outside-message" id="env-message">${esc(env.message)}</p></section>
+        </div>`;
+    }
+    function settingsView() {
+      const prefs = store.settings;
+      const space = Math.min(100, Math.round(JSON.stringify(store.letters).length / LIMIT.storage * 100));
+      return `${pageHeading('Seu espaço', 'Configurações', 'Ajuste o LETTERFORM ao seu jeito de escrever.')}
+        <div class="setting-layout">
+          <form id="settings-form" class="form-stack">
+            <section class="setting-section"><h2>Seu nome</h2><p class="fine">Usado na saudação e como remetente sugerido nas novas cartas.</p>${textField('Nome de exibição', 'name', prefs.name, 'maxlength="45" placeholder="Como podemos chamar você?" autocomplete="given-name"')}</section>
+            <section class="setting-section"><h2>Sua papelaria</h2><p class="fine">Preferências para novas cartas. Suas cartas existentes não serão alteradas.</p>
+              <div class="field-row">${selectField('Papel padrão', 'paper', PAPER, prefs.paper)}${selectField('Tipografia padrão', 'font', FONTS, prefs.font)}</div>
+            </section>
+            <div class="actions"><button class="button primary" type="submit">${icon('check')}Salvar preferências</button></div>
+          </form>
+          <aside class="form-stack">
+            <section class="setting-section"><h2>Armazenamento local</h2><p class="fine">O LETTERFORM guarda suas cartas neste navegador. Limpar os dados do site pode apagar sua biblioteca.</p>
+              <div class="storage-meter" role="meter" aria-label="Espaço local usado" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${space}"><span style="width:${space}%"></span></div><p class="fine">${space}% do limite interno utilizado (estimativa).</p>
+            </section>
+            <section class="setting-section"><h2>Compartilhamento</h2><p class="fine">Exporte suas cartas finalizadas em JSON e compartilhe os arquivos manualmente. Não há envio online nem sincronização entre dispositivos.</p><p class="fine">O arquivo JSON contém o texto, inclusive em envelopes programados. O prazo de abertura não é uma proteção criptográfica.</p>
+              ${action('import', 'Importar uma carta', 'upload', 'button subtle')}
+            </section>
+          </aside>
+        </div>`;
+    }
+    function renderPage(animate = false) {
+      const [page, id] = route.split('/');
+      let letter = id ? findLetter(id) : null;
+      if (page === 'carta' && letter?.receivedAt && !letter.readAt && isReadable(letter) && stagedOpening !== id) {
+        const read = { ...letter, readAt: new Date().toISOString() };
+        if (putLetter(read, true)) letter = read;
+      }
+      const label = own(PAGES, page) ? PAGES[page] : page === 'carta' ? (letter ? titleOf(letter) : 'Carta indisponível') : page === 'editar' ? 'Editar carta' : 'Preparar envelope';
+      document.title = page === 'inicio' ? 'LETTERFORM | Papelaria digital' : `${label} | LETTERFORM`;
+      view.className = 'viewport' + (animate ? ' page-enter' : '') + (page === 'carta' && isReadable(letter) && stagedOpening !== id ? ' reader-screen' : '');
+      if (id && !letter) view.innerHTML = missingPage();
+      else if (page === 'inicio') view.innerHTML = dashboardView();
+      else if (page === 'nova' || page === 'editar') view.innerHTML = editorView(letter);
+      else if (page === 'carta') view.innerHTML = readerView(letter);
+      else if (own(filters, page)) view.innerHTML = libraryView(page);
+      else if (page === 'envelopes') view.innerHTML = envelopeLibraryView();
+      else if (page === 'envelope') view.innerHTML = envelopeEditorView(letter);
+      else if (page === 'calendario') view.innerHTML = calendarView();
+      else if (page === 'configuracoes') view.innerHTML = settingsView();
+      markNav();
+    }
+    function setEditorStatus(message, symbol = 'clock') {
+      if (!editor || (editor.status === message && editor.statusIcon === symbol)) return;
+      editor.status = message;
+      editor.statusIcon = symbol;
+      const status = $('#editor-status');
+      if (status) status.innerHTML = `${icon(symbol, 'sm')}<span>${esc(message)}</span>`;
+    }
+    function tuneEditor() {
+      const sheet = $('#editor-sheet');
+      if (sheet && editor) {
+        Object.assign(sheet.dataset, editor.value.style);
+        for (const button of $$('[data-paper-choice]', view)) button.setAttribute('aria-pressed', String(button.dataset.paperChoice === editor.value.style.paper));
+      }
+    }
+    function scheduleSave() {
+      if (!editor) return;
+      editor.changed = editor.unsaved = true;
+      setEditorStatus('Salvando automaticamente...');
+      clearTimeout(editorTimer);
+      editorTimer = setTimeout(() => saveEditor('auto'), 590);
+    }
+    function requiredEditorField(letter) {
+      if (!letter.title.trim()) return ['title', 'Informe o título da carta.'];
+      if (!letter.to.trim()) return ['to', 'Informe o destinatário.'];
+      if (!letter.from.trim()) return ['from', 'Informe o remetente.'];
+      if (!localDay(letter.created) || letter.created > dateKey()) return ['created', 'Escolha uma data de criação válida, que não esteja no futuro.'];
+      if (!letter.body.trim()) return ['body', 'Escreva algo na carta antes de finalizá-la.'];
+      return null;
+    }
+    function saveEditor(mode = 'manual') {
+      if (!editor) return false;
+      if (mode === 'auto' && !editor.unsaved) return true;
+      if (mode !== 'auto' && editor.processing) { toast('Aguarde o processamento das fotografias.'); return false; }
+      clearTimeout(editorTimer);
+      const source = editor.value;
+      const finish = mode === 'final';
+      const existing = findLetter(source.id);
+      if (existing && !isReadable(existing)) {
+        setEditorStatus('Esta carta ainda não está disponível para edição.', 'alert');
+        return false;
+      }
+      const validation = (finish || !source.draft) && requiredEditorField(source);
+      if (validation) {
+        setEditorStatus(validation[1], 'alert');
+        if (mode !== 'auto') { toast(validation[1], true); $(`#editor-form [name="${validation[0]}"]`)?.focus(); }
+        return false;
+      }
+      const snapshot = clone(source);
+      snapshot.title = snapshot.title.trim();
+      snapshot.to = snapshot.to.trim();
+      snapshot.from = snapshot.from.trim();
+      if (!localDay(snapshot.created) || snapshot.created > dateKey()) snapshot.created = editor.original?.created || dateKey();
+      snapshot.draft = !finish && source.draft;
+      snapshot.updatedAt = new Date().toISOString();
+      if (!putLetter(snapshot, mode === 'auto')) {
+        editor.unsaved = true;
+        setEditorStatus(lastStorageError, 'alert');
+        return false;
+      }
+      editor.value.updatedAt = snapshot.updatedAt;
+      editor.value.draft = snapshot.draft;
+      editor.unsaved = false;
+      if (route === 'nova' && parseRoute(location.hash) === 'nova') {
+        route = `nova/${snapshot.id}`;
+        history.replaceState(null, '', '#' + route);
+      }
+      setEditorStatus(`${snapshot.draft ? 'Rascunho salvo' : 'Carta salva'} às ${dateTime.format(new Date(snapshot.updatedAt))}`, 'check');
+      if (mode !== 'auto') {
+        editor.original = clone(snapshot);
+        editor.changed = false;
+        toast(finish ? 'Carta salva na sua biblioteca.' : snapshot.draft ? 'Rascunho salvo.' : 'Alterações salvas.');
+      }
+      if (finish) void go(readPath(snapshot), { skipGuard: true });
+      return true;
+    }
+    async function discardEditor() {
+      if (!editor?.changed) { toast('Nenhuma alteração para descartar.'); return; }
+      if (editor.processing) { toast('Aguarde o processamento das fotografias.'); return; }
+      const session = editor;
+      const back = session.original ? readPath(session.original) : 'minhas';
+      if (!await confirmAction('Descartar alterações?', session.original ? 'A carta voltará à versão que você salvou antes destas alterações.' : 'Este rascunho e as fotos anexadas serão removidos.', 'Descartar alterações')) return;
+      if (editor !== session) return;
+      clearTimeout(editorTimer);
+      const { id } = session.value;
+      if (findLetter(id)) {
+        const ok = session.original ? putLetter(session.original) : commit({ ...store, letters: store.letters.filter(letter => letter.id !== id) });
+        if (!ok) return;
+      }
+      toast('Alterações descartadas.');
+      await go(back, { skipGuard: true });
+    }
+    function refreshLibrary() {
+      const results = $('#library-results');
+      if (results && own(filters, route)) results.innerHTML = libraryResults(route);
+    }
+    function toggleFavorite(letter) {
+      const next = { ...letter, favorite: !letter.favorite };
+      if (!putLetter(next)) return;
+      if (own(filters, route)) refreshLibrary();
+      else renderPage();
+      $(`[data-action="favorite"][data-id="${letter.id}"]`, view)?.focus({ preventScroll: true });
+      toast(next.favorite ? 'Carta adicionada às favoritas.' : 'Carta removida das favoritas.');
+    }
+    function duplicateLetter(letter) {
+      if (!isReadable(letter)) { toast('Abra o envelope antes de duplicar a carta.', true); return; }
+      const copy = { ...clone(letter), id: uid(), created: dateKey(), updatedAt: new Date().toISOString(), title: `${titleOf(letter).slice(0, LIMIT.title - 8)} (cópia)`, receivedAt: null, readAt: null, favorite: false, envelope: null, draft: true };
+      copy.photos = copy.photos.map(photo => ({ ...photo, id: uid() }));
+      if (putLetter(copy)) {
+        toast('Cópia salva como rascunho.');
+        void go(editPath(copy));
+      }
+    }
+    async function deleteLetter(letter) {
+      if (!await confirmAction('Excluir esta carta?', `“${titleOf(letter)}” será removida da biblioteca. Esta ação não pode ser desfeita.`, 'Excluir carta')) return;
+      if (!commit({ ...store, letters: store.letters.filter(item => item.id !== letter.id) })) return;
+      if (route === readPath(letter)) await go(collectionOf(letter));
+      else if (own(filters, route)) {
+        refreshLibrary();
+        $('[data-filter="q"]', view)?.focus();
+      } else renderPage();
+      toast('Carta excluída.');
+    }
+    function chooseEnvelope() {
+      const candidates = store.letters.filter(letter => !letter.receivedAt && !letter.draft && !isLocked(letter)).sort((a, b) => Number(Boolean(a.envelope)) - Number(Boolean(b.envelope)) || updateOrder(a,b));
+      if (candidates.length === 1) { void go(envelopePath(candidates[0])); return; }
+      if (!candidates.length) {
+        void dialogBox('Prepare uma carta primeiro', `<p class="muted">Finalize uma carta sua para escolher o modelo do envelope e, se quiser, programar uma abertura.</p>`, [
+          { value: 'minhas', text: 'Ir à biblioteca' }, { value: 'nova', text: 'Escrever uma carta', css: 'primary' }
+        ]).then(result => { if (result === 'minhas' || result === 'nova') void go(result); });
+        return;
+      }
+      void dialogBox('Escolha uma carta', `<div class="choose-list">${candidates.map(letter => `<button type="button" class="list-row" data-result="${letter.id}"><span class="row-icon">${icon('mail')}</span><span class="row-copy"><strong>${esc(titleOf(letter))}</strong><span class="fine">Para ${esc(recipient(letter))} · ${esc(STATES[stateFor(letter)])}</span></span>${icon('next', 'sm')}</button>`).join('')}</div>`).then(id => {
+        if (id && findLetter(id)) void go(`envelope/${id}`);
+      });
+    }
+    function parseOpening(day, time) {
+      const local = localDay(day);
+      if (!local || typeof time !== 'string' || !/^([01]\d|2[0-3]):[0-5]\d$/.test(time)) return null;
+      const [hours, minutes] = time.split(':').map(Number);
+      local.setHours(hours, minutes, 0, 0);
+      if (local.getHours() !== hours || local.getMinutes() !== minutes || dateKey(local) !== day) return null;
+      return local;
+    }
+    function updateEnvelopePreview(form) {
+      if (!envEditor) return;
+      const field = form.elements;
+      const next = envEditor.value;
+      next.model = choice(MODELS, field.model.value, 'classic');
+      next.color = choice(COLORS, field.color.value, 'natural');
+      next.from = field.from.value;
+      next.to = field.to.value;
+      next.message = field.message.value;
+      const schedule = field.schedule.checked;
+      $('#opening-fields').hidden = !schedule;
+      field.openingDate.required = field.openingTime.required = schedule;
+      const art = $('.envelope-stage', $('#env-art'));
+      if (art.dataset.model !== next.model || art.dataset.color !== next.color) $('#env-art').innerHTML = envelopeArt(next);
+      $('#env-address').textContent = `Para ${next.to.trim() || '...'} · De ${next.from.trim() || '...'}`;
+      $('#env-message').textContent = next.message;
+      $('#envelope-error').hidden = true;
+      envEditor.dirty = true;
+    }
+    function saveEnvelope(seal = true) {
+      const form = $('#envelope-form');
+      const letter = envEditor && findLetter(envEditor.id);
+      if (!form || !letter || letter.receivedAt || letter.draft || isLocked(letter)) return;
+      if (!seal && letter.envelope?.sealedAt) return;
+      const env = envEditor.value;
+      const fields = form.elements;
+      function showError(message, field) {
+        const error = $('#envelope-error');
+        error.textContent = message;
+        error.hidden = false;
+        fields[field]?.focus();
+      }
+      if (!env.to.trim()) { showError('Informe o destinatário do envelope.', 'to'); return; }
+      if (!env.from.trim()) { showError('Informe o remetente do envelope.', 'from'); return; }
+      const savedAt = Date.now();
+      let opening = null;
+      if (fields.schedule.checked) {
+        opening = parseOpening(fields.openingDate.value, fields.openingTime.value);
+        if (!opening) { showError('Escolha uma data e um horário local válidos.', fields.openingDate.value ? 'openingTime' : 'openingDate'); return; }
+        if (+opening <= savedAt || dateKey(opening) < letter.created) { showError('A abertura deve estar no futuro e não pode anteceder a criação da carta.', 'openingDate'); return; }
+      }
+      const now = new Date(savedAt).toISOString();
+      const next = { ...letter, updatedAt: now, envelope: { ...env, to: env.to.trim(), from: env.from.trim(), message: env.message.trim(), openingAt: opening ? opening.toISOString() : null, sealedAt: seal ? now : null, openedAt: null } };
+      if (!putLetter(next)) return;
+      if (seal && opening) previousWaiting.add(letter.id);
+      envEditor.dirty = false;
+      toast(seal ? (opening ? 'Envelope fechado. Abertura programada.' : 'Envelope fechado.') : 'Rascunho do envelope salvo.');
+      void go(seal ? readPath(next) : 'envelopes', { skipGuard: true });
+    }
+    async function removeEnvelope(letter) {
+      if (!letter.envelope || letter.receivedAt || isLocked(letter)) return;
+      if (!await confirmAction('Remover envelope?', 'A carta continuará na sua biblioteca, mas o modelo, a mensagem externa e a programação serão removidos.', 'Remover envelope')) return;
+      if (putLetter({ ...letter, updatedAt: new Date().toISOString(), envelope: null })) {
+        toast('Envelope removido.');
+        await go(readPath(letter), { skipGuard: true });
+      }
+    }
+    function countdown(timestamp) {
+      const total = Math.ceil((+new Date(timestamp) - Date.now()) / 1000);
+      if (total <= 0) return 'Disponível agora';
+      const days = Math.floor(total / 86400);
+      const hours = Math.floor(total / 3600) % 24;
+      const minutes = Math.floor(total / 60) % 60;
+      return `Faltam ${days ? `${days}d ` : ''}${days || hours ? `${pad(hours)}h ` : ''}${pad(minutes)}min ${pad(total % 60)}s`;
+    }
+    function openEnvelope(letter, trigger) {
+      const env = letter.envelope;
+      if (!env?.sealedAt || env.openedAt || stagedOpening) return;
+      if (isLocked(letter)) { toast('O envelope ainda está aguardando a data programada.', true); return; }
+      const now = new Date().toISOString();
+      if (!putLetter({ ...letter, updatedAt: now, envelope: { ...env, openedAt: now } })) return;
+      stagedOpening = letter.id;
+      $('.sealed-screen .envelope-stage')?.classList.add('is-open');
+      const title = $('.sealed-screen .micro');
+      if (title) title.textContent = 'Abrindo envelope';
+      trigger.disabled = true;
+      trigger.innerHTML = '<span class="spinner" aria-hidden="true"></span>Abrindo...';
+      setTimeout(() => {
+        stagedOpening = '';
+        if (route === readPath(letter)) { renderPage(true); view.focus({ preventScroll: true }); }
+      }, matchMedia('(prefers-reduced-motion: reduce)').matches ? 35 : 860);
+    }
+    function imageFrom(source) {
+      return new Promise((resolve, reject) => {
+        const image = new Image();
+        image.onload = () => resolve(image);
+        image.onerror = () => reject(new Error('Não foi possível ler esta imagem.'));
+        image.src = source;
+      });
+    }
+    function imageType(bytes) {
+      const matches = (offset, values) => values.every((value, i) => bytes[offset + i] === value);
+      if (matches(0, [255, 216, 255])) return 'image/jpeg';
+      if (matches(0, [137, 80, 78, 71, 13, 10, 26, 10])) return 'image/png';
+      if (matches(0, [82, 73, 70, 70]) && matches(8, [87, 69, 66, 80])) return 'image/webp';
+      return '';
+    }
+    function packedPhoto(image) {
+      const w = image.naturalWidth, h = image.naturalHeight;
+      if (!w || !h || w * h > 48000000) throw new Error('A imagem é grande demais. Tente reduzi-la antes de anexar.');
+      const canvas = document.createElement('canvas');
+      const ctx = canvas.getContext('2d', { alpha: false });
+      if (!ctx) throw new Error('Este navegador não conseguiu processar a fotografia.');
+      let ratio = Math.min(1, 1450 / Math.max(w, h));
+      for (let pass = 0; pass < 4; pass++) {
+        canvas.width = Math.max(1, Math.round(w * ratio));
+        canvas.height = Math.max(1, Math.round(h * ratio));
+        ctx.fillStyle = '#FFFFFF';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
+        for (const quality of [.85, .72, .56]) {
+          const src = canvas.toDataURL('image/jpeg', quality);
+          if (photoURL(src)) return src;
+        }
+        ratio *= .8;
+      }
+      throw new Error('Não foi possível compactar a imagem para o armazenamento local.');
+    }
+    async function preparePhoto(file) {
+      const extensions = { jpg: 'image/jpeg', jpeg: 'image/jpeg', png: 'image/png', webp: 'image/webp' };
+      const ext = file.name.toLowerCase().split('.').pop();
+      if (!own(extensions, ext)) throw new Error('Selecione uma imagem JPG, JPEG, PNG ou WebP.');
+      if (file.size > LIMIT.upload) throw new Error('Cada fotografia deve ter até 12 MB.');
+      const head = new Uint8Array(await file.slice(0, 12).arrayBuffer());
+      if (imageType(head) !== extensions[ext]) throw new Error('O conteúdo da imagem não corresponde ao formato do arquivo.');
+      const blobURL = URL.createObjectURL(file);
+      try { return { id: uid(), src: packedPhoto(await imageFrom(blobURL)), caption: '' }; }
+      finally { URL.revokeObjectURL(blobURL); }
+    }
+    function refreshPhotos() {
+      if (!editor) return;
+      const photos = $('#editor-photos');
+      if (photos) photos.innerHTML = editorPhotosMarkup(editor.value);
+      const count = $('#photo-count');
+      if (count) count.textContent = `${editor.value.photos.length} de ${LIMIT.photos} fotos`;
+      const trigger = $('#photo-trigger');
+      if (trigger) trigger.disabled = editor.processing || editor.value.photos.length >= LIMIT.photos;
+    }
+    async function attachPhotos(files) {
+      if (!editor || editor.processing || !files.length) return;
+      const session = editor;
+      const room = LIMIT.photos - session.value.photos.length;
+      if (room <= 0) { toast(`Você pode adicionar até ${LIMIT.photos} fotos por carta.`, true); return; }
+      session.processing = true;
+      const photos = [];
+      const errors = [];
+      await busy($('#photo-trigger'), 'Preparando fotos...', async () => {
+        for (const file of files.slice(0, room)) {
+          try { photos.push(await preparePhoto(file)); }
+          catch (error) { errors.push(error.message || 'Não foi possível anexar esta fotografia.'); }
+        }
+      });
+      if (editor !== session) return;
+      session.processing = false;
+      session.value.photos.push(...photos);
+      refreshPhotos();
+      if (photos.length) {
+        scheduleSave();
+        if (!saveEditor('auto')) toast(session.status, true);
+        else if (!errors.length && files.length <= room) toast(photos.length === 1 ? 'Fotografia adicionada.' : 'Fotografias adicionadas.');
+      }
+      if (errors.length) toast(errors[0], true);
+      else if (files.length > room) toast(`Apenas as primeiras ${room} imagens cabem. O limite é de ${LIMIT.photos} por carta.`, true);
+    }
+    function removePhoto(id) {
+      if (!editor || editor.processing || !editor.value.photos.some(photo => photo.id === id)) return;
+      editor.value.photos = editor.value.photos.filter(photo => photo.id !== id);
+      refreshPhotos();
+      scheduleSave();
+      $('#photo-trigger')?.focus();
+    }
+    function slug(title) { return folded(title).replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '').slice(0, 70) || 'carta'; }
+    function downloadFile(contents, type, filename) {
+      const url = URL.createObjectURL(new Blob([contents], { type }));
+      const anchor = document.createElement('a');
+      anchor.href = url;
+      anchor.download = filename;
+      document.body.append(anchor);
+      anchor.click();
+      anchor.remove();
+      setTimeout(() => URL.revokeObjectURL(url), 20000);
+    }
+    async function exportJSON(letter) {
+      if (letter.draft) { toast('Finalize a carta antes de compartilhar.', true); return; }
+      if (isLocked(letter) && !await confirmAction('Exportar envelope programado?', 'O arquivo inclui o texto da carta. O LETTERFORM respeita a data de abertura na interface, mas o JSON pode ser lido fora dela.', 'Exportar arquivo', 'primary')) return;
+      try {
+        const { id, title, to, from, category, body, created, updatedAt, style, photos, envelope } = letter;
+        const packet = { type: 'letterform-letter', version: 1, letter: { id, title, to, from, category, body, created, updatedAt, style, photos, envelope } };
+        downloadFile(JSON.stringify(packet, null, 2), 'application/json;charset=utf-8', `letterform-${slug(title)}.json`);
+        toast('Arquivo da carta preparado para compartilhar.');
+      } catch { toast('Não foi possível gerar o arquivo da carta.', true); }
+    }
+    const isRecord = value => value !== null && typeof value === 'object' && !Array.isArray(value);
+    const textOK = (value, max, required = false) => typeof value === 'string' && value.length <= max && (!required || Boolean(value.trim()));
+    async function safeImport(packet) {
+      if (!isRecord(packet) || packet.type !== 'letterform-letter' || packet.version !== 1 || !isRecord(packet.letter)) throw new Error('Escolha um arquivo JSON exportado pelo LETTERFORM 1.0.');
+      const source = packet.letter;
+      const style = source.style;
+      if (!idOK(source.id) || !textOK(source.title, LIMIT.title, true) || !textOK(source.to, LIMIT.person, true) || !textOK(source.from, LIMIT.person, true) ||
+        !textOK(source.body, LIMIT.letter, true) || !own(CATEGORY, source.category) || !localDay(source.created) || !isoOK(source.updatedAt)) {
+        throw new Error('O arquivo tem campos obrigatórios ausentes ou inválidos.');
+      }
+      if (!isRecord(style) || !own(FONTS, style.font) || !own(PAPER, style.paper) || !own(SIZES, style.size) || !own(TONES, style.tone) || !own(ALIGNS, style.align)) throw new Error('A personalização da carta é inválida.');
+      const env = source.envelope;
+      if (env !== null) {
+        if (!isRecord(env) || !own(MODELS, env.model) || !own(COLORS, env.color) || !textOK(env.to, LIMIT.person, true) || !textOK(env.from, LIMIT.person, true) || !textOK(env.message, LIMIT.message) ||
+          ['openingAt', 'sealedAt', 'openedAt'].some(key => env[key] !== null && !isoOK(env[key])) ||
+          (env.openingAt && env.sealedAt && env.openingAt <= env.sealedAt) || (env.openedAt && (!env.sealedAt || env.openedAt < env.sealedAt || (env.openingAt && env.openedAt < env.openingAt)))) {
+          throw new Error('As informações do envelope ou as datas de abertura são inválidas.');
+        }
+      }
+      if (!Array.isArray(source.photos) || source.photos.length > LIMIT.photos) throw new Error(`A carta não pode ter mais de ${LIMIT.photos} fotografias.`);
+      const photos = [];
+      for (const photo of source.photos) {
+        if (!isRecord(photo) || !photoURL(photo.src) || !textOK(photo.caption, LIMIT.caption)) throw new Error('A carta contém uma fotografia ou legenda inválida.');
+        const [header, data] = photo.src.split(',');
+        const declared = header.split(';')[0].slice(5);
+        let type = '';
+        try { type = imageType(Uint8Array.from(atob(data.slice(0, 16)), char => char.charCodeAt(0))); } catch { /* A assinatura precisa ser verificável. */ }
+        if (type !== declared || data.length % 4 !== 0) throw new Error('Uma fotografia no arquivo não corresponde a um formato permitido.');
+        const image = await imageFrom(photo.src);
+        const src = Math.max(image.naturalHeight, image.naturalWidth) > 1450 ? packedPhoto(image) : photo.src;
+        photos.push({ id: uid(), src, caption: photo.caption });
+      }
+      // Reconstrói a carta campo a campo. Dados extras nunca são interpretados como HTML.
+      const letter = safeLetter(source);
+      return { ...letter, id: uid(), favorite: false, draft: false, receivedAt: new Date().toISOString(), readAt: null, photos, envelope: letter.envelope ? { ...letter.envelope, openedAt: null } : null };
+    }
+    let importTrigger = null;
+    async function importLetter(file) {
+      if (!file || importsBusy) return;
+      importsBusy = true;
+      try {
+        const letter = await busy(importTrigger, 'Validando arquivo...', async () => {
+          if (!file.name.toLowerCase().endsWith('.json') || file.size > LIMIT.json) throw new Error('Escolha um arquivo .json de até 1,1 MB.');
+          let data;
+          try { data = JSON.parse((await file.text()).replace(/^\uFEFF/, '')); }
+          catch { throw new Error('O arquivo não contém um JSON válido.'); }
+          return await safeImport(data);
+        });
+        const body = isReadable(letter) ? paperMarkup(letter, true) : `<div class="sealed-screen compact"><p class="micro">${esc(STATES[stateFor(letter)])}</p><h2 class="import-title">${esc(titleOf(letter))}</h2><p>De <strong>${esc(letter.envelope.from)}</strong> · Para ${esc(letter.envelope.to)}</p>${envelopeArt(letter.envelope)}${letter.envelope.message ? `<p class="outside-message">${esc(letter.envelope.message)}</p>` : ''}${isLocked(letter) ? `<p>Disponível em ${esc(openingLabel(letter.envelope.openingAt))}.</p>` : '<p>Você poderá abrir o envelope depois de importar.</p>'}</div>`;
+        const result = await dialogBox('Prévia da carta recebida', body, [{ value: 'cancel', text: 'Cancelar' }, { value: 'import', text: 'Confirmar importação', css: 'primary' }], true);
+        if (result !== 'import') return;
+        letter.receivedAt = new Date().toISOString();
+        if (!putLetter(letter)) return;
+        filters.recebidas = emptyFilters();
+        if (route === 'recebidas') renderPage(true);
+        else await go('recebidas');
+        toast('Carta guardada em Recebidas.');
+      } catch (error) { toast(error.message || 'Não foi possível importar a carta.', true); }
+      finally { importsBusy = false; importTrigger = null; }
+    }
+    const PDF_FONT = { serif: "'Cormorant Garamond', Georgia, serif", sans: "'DM Sans', Arial, sans-serif", hand: "'Parisienne', 'Segoe Script', cursive" };
+    const PDF_LOAD_ERROR = 'A biblioteca de PDF não carregou. Você pode usar Imprimir e escolher Salvar como PDF.';
+    let pdfLibrary;
+    function loadPDFLibrary() {
+      if (window.jspdf?.jsPDF) return Promise.resolve(window.jspdf.jsPDF);
+      if (!pdfLibrary) {
+        pdfLibrary = new Promise((resolve, reject) => {
+          const script = document.createElement('script');
+          script.src = 'https://cdn.jsdelivr.net/npm/jspdf@4.2.1/dist/jspdf.umd.min.js';
+          script.integrity = 'sha256-5lUfzcMvCdaFOyxRJtGNAdlEfg2mGKQaEevu4PbCDVQ=';
+          script.crossOrigin = 'anonymous';
+          script.async = true;
+          const timer = setTimeout(fail, 8500);
+          function fail() { clearTimeout(timer); script.remove(); reject(new Error(PDF_LOAD_ERROR)); }
+          script.onerror = fail;
+          script.onload = () => {
+            if (!window.jspdf?.jsPDF) { fail(); return; }
+            clearTimeout(timer);
+            resolve(window.jspdf.jsPDF);
+          };
+          document.head.append(script);
+        }).catch(error => { pdfLibrary = null; throw error; });
+      }
+      return pdfLibrary;
+    }
+    async function waitForPrintFonts() {
+      if (!document.fonts) return;
+      const fonts = Promise.allSettled([document.fonts.load('600 40px "Cormorant Garamond"'), document.fonts.load('400 25px "Cormorant Garamond"'), document.fonts.load('400 20px "DM Sans"'), document.fonts.load('400 30px "Parisienne"')]);
+      await Promise.race([fonts, new Promise(resolve => setTimeout(resolve, 1400))]);
+    }
+    function wrapPDFText(ctx, value, width) {
+      const result = [];
+      for (const paragraph of value.replace(/\r\n?/g, '\n').split('\n')) {
+        const words = paragraph.trim().split(/\s+/u);
+        let line = '';
+        const push = (text, continued) => result.push({ text, continued });
+        for (const word of words) {
+          const next = line ? `${line} ${word}` : word;
+          if (ctx.measureText(next).width <= width) { line = next; continue; }
+          if (line) { push(line, true); line = ''; }
+          if (ctx.measureText(word).width <= width) { line = word; continue; }
+          for (const char of word) {
+            if (line && ctx.measureText(line + char).width > width) { push(line, true); line = ''; }
+            line += char;
+          }
+        }
+        push(line, false);
+      }
+      return result;
+    }
+    async function buildPDF(letter, JsPDF) {
+      const pdf = new JsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4', compress: true });
+      pdf.setProperties({ title: titleOf(letter), author: letter.from, creator: 'LETTERFORM' });
+      const canvas = document.createElement('canvas');
+      const w = 794, h = 1123, margin = 72, bottom = h - margin, printable = w - margin * 2, scale = 1.65;
+      canvas.width = Math.round(w * scale);
+      canvas.height = Math.round(h * scale);
+      const ctx = canvas.getContext('2d', { alpha: false });
+      if (!ctx) throw new Error('canvas');
+      ctx.setTransform(canvas.width / w, 0, 0, canvas.height / h, 0, 0);
+      const paper = { ivory: '#F8F5F0', rose: '#EFE2DD', white: '#FFFFFF', natural: '#EEE7DE' }[letter.style.paper];
+      const ink = { ink: '#403936', gray: '#675B56', rose: '#7C6463', taupe: '#655A54' }[letter.style.tone];
+      const bodySize = { small: 20, medium: 25, large: 30 }[letter.style.size] * { serif: 1, sans: .83, hand: 1.13 }[letter.style.font];
+      let y, pages = 0;
+      function startPage() {
+        ctx.fillStyle = paper;
+        ctx.fillRect(0, 0, w, h);
+        if (letter.style.paper === 'natural') {
+          ctx.strokeStyle = '#403936';
+          ctx.globalAlpha = .025;
+          ctx.beginPath();
+          for (let y = -250; y < h; y += 25) { ctx.moveTo(0, y); ctx.lineTo(w, y + 242); }
+          ctx.stroke();
+        }
+        ctx.strokeStyle = '#C99E9C';
+        ctx.globalAlpha = .63;
+        ctx.strokeRect(29.5, 29.5, w - 59, h - 59);
+        ctx.globalAlpha = 1;
+        y = margin;
+      }
+      function savePage() {
+        if (pages >= 65) throw new Error('pdf-length');
+        if (pages) pdf.addPage('a4', 'portrait');
+        pdf.addImage(canvas.toDataURL('image/jpeg', .93), 'JPEG', 0, 0, 210, 297);
+        pages++;
+      }
+      function room(height) {
+        if (y + height > bottom) { savePage(); startPage(); }
+      }
+      function styledLines(text, font, step, color = ink, align = 'left') {
+        ctx.font = font;
+        for (const { text: line, continued } of wrapPDFText(ctx, text, printable)) {
+          room(step);
+          ctx.fillStyle = color;
+          ctx.font = font;
+          ctx.textBaseline = 'top';
+          ctx.textAlign = align === 'center' ? 'center' : 'left';
+          const words = line.split(' ');
+          if (align === 'justify' && continued && words.length > 1) {
+            const measured = words.map(word => ctx.measureText(word).width);
+            const space = (printable - measured.reduce((sum, item) => sum + item, 0)) / (words.length - 1);
+            let x = margin;
+            words.forEach((word, i) => { ctx.fillText(word, x, y); x += measured[i] + space; });
+          } else {
+            ctx.fillText(line, align === 'center' ? w / 2 : margin, y);
+          }
+          y += step;
+        }
+      }
+      startPage();
+      styledLines(`${letter.category.toLocaleUpperCase('pt-BR')} · ${dateLabel(letter.created)}`, `600 13px ${PDF_FONT.sans}`, 20, '#7C6463');
+      y += 12;
+      styledLines(titleOf(letter), `600 55px ${PDF_FONT.serif}`, 56, '#403936');
+      y += 12;
+      styledLines(`De: ${sender(letter)}\nPara: ${recipient(letter)}`, `400 15px ${PDF_FONT.sans}`, 24, '#675B56');
+      y += 9;
+      ctx.strokeStyle = '#C99E9C';
+      ctx.beginPath();
+      ctx.moveTo(margin, y);
+      ctx.lineTo(w - margin, y);
+      ctx.stroke();
+      y += 24;
+      styledLines(letter.body || 'O papel ainda está em branco.', `400 ${bodySize}px ${PDF_FONT[letter.style.font]}`, Math.ceil(bodySize * 1.47), ink, letter.style.align);
+      if (letter.from.trim()) {
+        y += 17;
+        styledLines(sender(letter), `400 34px ${PDF_FONT.hand}`, 45);
+      }
+      for (const photo of letter.photos) {
+        const image = await imageFrom(photo.src);
+        const ratio = Math.min(printable / image.naturalWidth, 445 / image.naturalHeight, 1.12);
+        const width = image.naturalWidth * ratio, height = image.naturalHeight * ratio;
+        const font = `400 14px ${PDF_FONT.sans}`;
+        ctx.font = font;
+        const captionHeight = photo.caption ? wrapPDFText(ctx, photo.caption, printable).length * 19 + 5 : 0;
+        y += 20;
+        room(height + captionHeight);
+        ctx.drawImage(image, (w - width) / 2, y, width, height);
+        y += height;
+        if (photo.caption) { y += 5; styledLines(photo.caption, font, 19, '#675B56', 'center'); }
+      }
+      savePage();
+      return pdf;
+    }
+    async function exportPDF(letter, trigger) {
+      if (!isReadable(letter) || stagedOpening === letter.id) return;
+      await busy(trigger, 'Gerando PDF...', async () => {
+        try {
+          const [JsPDF] = await Promise.all([loadPDFLibrary(), waitForPrintFonts()]);
+          const pdf = await buildPDF(letter, JsPDF);
+          pdf.save(`letterform-${slug(titleOf(letter))}.pdf`);
+          toast('PDF da carta preparado.');
+        } catch (error) {
+          toast(error.message === PDF_LOAD_ERROR ? PDF_LOAD_ERROR : error.message === 'pdf-length' ? 'A carta é longa demais para esta exportação. Tente salvar como PDF pelo botão Imprimir.' : 'Não foi possível gerar o PDF. Tente novamente ou use Imprimir.', true);
+        }
+      });
+    }
+    async function printLetter(letter) {
+      if (!isReadable(letter) || stagedOpening || route !== readPath(letter)) return;
+      await waitForPrintFonts();
+      if (route === readPath(letter) && isReadable(findLetter(letter.id))) window.print();
+    }
+    function refreshCalendar(actionName = '', key = '') {
+      const full = $('#full-calendar');
+      if (full) full.innerHTML = calendarMarkup(calMonth);
+      const events = $('#cal-events');
+      if (events) events.innerHTML = calendarEventsMarkup();
+      if (actionName && key) $(`[data-action="${actionName}"][data-${actionName === 'full-day' ? 'day' : 'step'}="${key}"]`, view)?.focus({ preventScroll: true });
+    }
+    function changeMonth(step, mini) {
+      if (![1, -1].includes(step)) return;
+      const current = mini ? miniMonth : calMonth;
+      const next = new Date(current.getFullYear(), current.getMonth() + step, 1);
+      if (next.getFullYear() < 1000 || next.getFullYear() > 9999) return;
+      if (mini) {
+        miniMonth = next;
+        $('#mini-calendar').innerHTML = miniMarkup();
+        $(`[data-action="mini-month"][data-step="${step}"]`, view)?.focus({ preventScroll: true });
+      } else {
+        calMonth = next;
+        selectedDay = +calMonth === +monthAt() ? dateKey() : dateKey(calMonth);
+        refreshCalendar('full-month', String(step));
+      }
+    }
+    function pickDay(key, mini) {
+      const day = localDay(key);
+      if (!day) return;
+      selectedDay = key;
+      calMonth = monthAt(day);
+      if (mini) void go('calendario');
+      else refreshCalendar('full-day', key);
+    }
+    let previousWaiting = new Set();
+    let previousToday = dateKey();
+    function tickClock() {
+      const waiting = new Set(waitingLetters().map(letter => letter.id));
+      const changed = waiting.size !== previousWaiting.size || [...waiting].some(id => !previousWaiting.has(id));
+      const now = new Date();
+      const today = dateKey(now);
+      const dayMoved = previousToday !== today;
+      const [page, id] = route.split('/');
+      if (dayMoved) {
+        if (+miniMonth === +monthAt(localDay(previousToday))) miniMonth = monthAt(now);
+        if (selectedDay === previousToday) { selectedDay = today; calMonth = monthAt(now); }
+        previousToday = today;
+      }
+      if (page === 'inicio') {
+        if (dayMoved) {
+          $('#welcome-date').dateTime = today;
+          $('#welcome-date span').textContent = cap(dateHeading.format(now));
+          $('#mini-calendar').innerHTML = miniMarkup();
+        }
+        if (changed || Number($('#waiting-count').textContent) !== waiting.size) {
+          $('#waiting-count').textContent = waiting.size;
+          $('#dash-upcoming').innerHTML = upcomingMarkup();
+          const recent = [...store.letters].sort(updateOrder).slice(0, 3);
+          if (recent.length) $('#dash-recent').innerHTML = recentRows(recent);
+        }
+      } else if (page === 'carta' && (waiting.has(id) !== Boolean($('[data-countdown]', view)))) {
+        const refocus = view.contains(document.activeElement);
+        renderPage();
+        if (refocus) ($('[data-action="open-envelope"]', view) || view).focus({ preventScroll: true });
+      } else if (page === 'envelopes' && changed) {
+        $('#envelope-results').innerHTML = envelopeResults();
+      } else if (own(filters, page) && changed) refreshLibrary();
+      else if (page === 'calendario' && dayMoved) refreshCalendar();
+      previousWaiting = waiting;
+      for (const node of $$('[data-countdown]', view)) {
+        const label = countdown(node.dataset.countdown);
+        if (node.textContent !== label) node.textContent = label;
+      }
+    }
+    function handleField(event) {
+      const field = event.target;
+      if (!(field instanceof HTMLInputElement || field instanceof HTMLSelectElement || field instanceof HTMLTextAreaElement)) return;
+      if (editor && field.closest('#editor-form') && ['title', 'to', 'from', 'created', 'category', 'body'].includes(field.name)) {
+        if (field.value !== editor.value[field.name]) {
+          editor.value[field.name] = field.name === 'category' ? choice(CATEGORY, field.value, 'Livre') : field.value;
+          scheduleSave();
+        }
+        return;
+      }
+      if (editor && field.closest('#editor-styles')) {
+        const dictionaries = { font: FONTS, size: SIZES, tone: TONES, align: ALIGNS };
+        if (own(dictionaries, field.name) && own(dictionaries[field.name], field.value) && editor.value.style[field.name] !== field.value) {
+          editor.value.style[field.name] = field.value;
+          tuneEditor();
+          scheduleSave();
+        }
+        return;
+      }
+      if (editor && field.dataset.caption) {
+        const photo = editor.value.photos.find(item => item.id === field.dataset.caption);
+        if (photo && photo.caption !== field.value) { photo.caption = field.value; scheduleSave(); }
+        return;
+      }
+      if (envEditor && field.form?.id === 'envelope-form') { updateEnvelopePreview(field.form); return; }
+      if (own(filters, route) && own(filters[route], field.dataset.filter)) {
+        const key = field.dataset.filter;
+        if (filters[route][key] !== field.value) { filters[route][key] = field.value; refreshLibrary(); }
+        return;
+      }
+      if (field.id === 'envelope-filter' && envelopeFilter !== field.value) {
+        envelopeFilter = field.value;
+        $('#envelope-results').innerHTML = envelopeResults();
+      }
+    }
+    function handleClick(event) {
+      const origin = event.target;
+      if (!(origin instanceof Element)) return;
+      for (const menu of $$('.item-menu[open]')) if (!menu.contains(origin)) menu.open = false;
+      const option = origin.closest('[data-result]');
+      if (option && modal.open && modal.contains(option)) { modal.close(option.dataset.result); return; }
+      const anchor = origin.closest('a[href^="#"]');
+      if (anchor && !event.metaKey && !event.ctrlKey && !event.altKey && !event.shiftKey && event.button === 0) {
+        event.preventDefault();
+        const target = anchor.getAttribute('href');
+        if (target === '#conteudo') { view.focus(); view.scrollIntoView({ block: 'start' }); }
+        else void go(target);
+        return;
+      }
+      const button = origin.closest('button[data-action]');
+      if (!button || button.disabled) return;
+      const name = button.dataset.action;
+      const letter = button.dataset.id ? findLetter(button.dataset.id) : null;
+      const menu = button.closest('.item-menu');
+      if (menu) menu.open = false;
+      switch (name) {
+        case 'toggle-drawer': drawer(!document.body.classList.contains('drawer-open')); break;
+        case 'close-drawer': drawer(false, true); break;
+        case 'close-modal': if (modal.open) modal.close(); break;
+        case 'full-month': changeMonth(Number(button.dataset.step), false); break;
+        case 'mini-month': changeMonth(Number(button.dataset.step), true); break;
+        case 'full-day': pickDay(button.dataset.day, false); break;
+        case 'mini-day': pickDay(button.dataset.day, true); break;
+        case 'calendar-today':
+          calMonth = monthAt(); selectedDay = dateKey(); refreshCalendar('full-day', selectedDay); break;
+        case 'reset-filters':
+          if (own(filters, route)) { filters[route] = emptyFilters(); renderPage(); $('[data-filter="q"]', view)?.focus(); } break;
+        case 'reset-envelopes':
+          envelopeFilter = ''; $('#envelope-filter').value = ''; $('#envelope-results').innerHTML = envelopeResults(); $('#envelope-filter').focus(); break;
+        case 'preview':
+          if (editor && !editor.processing) void dialogBox('Pré-visualização', paperMarkup(editor.value, true), [{ value: 'close', text: 'Voltar à edição' }], true);
+          else if (editor) toast('Aguarde o processamento das fotografias.');
+          break;
+        case 'select-paper':
+          if (editor && own(PAPER, button.dataset.paperChoice) && editor.value.style.paper !== button.dataset.paperChoice) { editor.value.style.paper = button.dataset.paperChoice; tuneEditor(); scheduleSave(); } break;
+        case 'save-letter': saveEditor(); break;
+        case 'finalize': saveEditor('final'); break;
+        case 'discard-editor': void discardEditor(); break;
+        case 'add-photo':
+          if (editor && !editor.processing) { $('#photo-file').value = ''; $('#photo-file').click(); } break;
+        case 'remove-photo': removePhoto(button.dataset.id); break;
+        case 'favorite': if (letter) toggleFavorite(letter); break;
+        case 'duplicate': if (letter) duplicateLetter(letter); break;
+        case 'delete-letter': if (letter) void deleteLetter(letter); break;
+        case 'choose-envelope': chooseEnvelope(); break;
+        case 'save-envelope-draft': saveEnvelope(false); break;
+        case 'remove-envelope': if (letter) void removeEnvelope(letter); break;
+        case 'open-envelope': if (letter) openEnvelope(letter, button); break;
+        case 'export-pdf': if (letter) void exportPDF(letter, button); break;
+        case 'print': if (letter) void printLetter(letter); break;
+        case 'export-json': if (letter) void exportJSON(letter); break;
+        case 'import':
+          if (!importsBusy) { importTrigger = button; $('#import-file').value = ''; $('#import-file').click(); } break;
+      }
+    }
+    function recentRows(letters) {
+      return letters.map(letter => summaryRow(letter, `${letter.receivedAt ? `De ${sender(letter)}` : `Para ${recipient(letter)}`} · ${STATES[stateFor(letter)]}`, letter.envelope ? 'mail' : 'file', letter.draft && !letter.receivedAt && isReadable(letter) ? editPath(letter) : readPath(letter))).join('');
+    }
+    store = loadStore();
+    route = parseRoute(location.hash);
+    previousWaiting = new Set(waitingLetters().map(letter => letter.id));
+    renderPage(true);
+    if (loadWarning) toast(loadWarning, true);
+    document.addEventListener('click', handleClick);
+    document.addEventListener('input', handleField);
+    document.addEventListener('change', handleField);
+    document.addEventListener('submit', event => {
+      if (event.target.id === 'settings-form') {
+        event.preventDefault();
+        const data = new FormData(event.target);
+        const settings = { name: String(data.get('name') || '').trim().slice(0, 45), paper: choice(PAPER, data.get('paper'), 'ivory'), font: choice(FONTS, data.get('font'), 'serif') };
+        if (commit({ ...store, settings })) toast('Preferências salvas.');
+      } else if (event.target.id === 'envelope-form') {
+        event.preventDefault();
+        saveEnvelope(true);
+      } else if (event.target.id === 'editor-form') event.preventDefault();
+    });
+    $('#photo-file').addEventListener('change', event => void attachPhotos([...event.target.files]));
+    $('#import-file').addEventListener('change', event => void importLetter(event.target.files[0]));
+    modal.addEventListener('close', () => {
+      const resolve = modalResolve;
+      modalResolve = null;
+      resolve?.(modal.returnValue || null);
+    });
+    window.addEventListener('hashchange', () => void go(location.hash, { fromHash: true }));
+    window.addEventListener('beforeunload', event => {
+      if (editor?.processing || (editor?.unsaved && !saveEditor('auto')) || envEditor?.dirty) { event.preventDefault(); event.returnValue = ''; }
+    });
+    document.addEventListener('keydown', event => {
+      if (event.key === 'Escape' && !modal.open) {
+        if (document.body.classList.contains('drawer-open')) drawer(false, true);
+        else for (const item of $$('.item-menu[open]')) { item.open = false; $('summary', item)?.focus(); }
+      }
+      if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === 's' && editor && !modal.open) { event.preventDefault(); saveEditor(); }
+    });
+    matchMedia('(max-width: 880px)').addEventListener('change', event => { if (!event.matches && document.body.classList.contains('drawer-open')) drawer(false); });
+    document.addEventListener('visibilitychange', () => {
+      if (document.visibilityState === 'visible') tickClock();
+      else if (editor?.unsaved) saveEditor('auto');
+    });
+    setInterval(tickClock, 1000);
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+</body>
+</html>
